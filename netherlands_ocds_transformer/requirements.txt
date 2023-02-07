@@ -1,0 +1,5 @@
+pandas~=1.5.3
+ocdsextensionregistry>=0.1.2
+flattentool~=0.20.1
+ocdskit~=1.1.3
+numpy~=1.24.1
