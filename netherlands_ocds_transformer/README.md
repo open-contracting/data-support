@@ -5,10 +5,10 @@ to OCDS, using a mapping file that maps each column from the original dataset to
 
 ### How to use
 
-- Install the requirements with `pip install -r requirements.tx`
-- Set the file name to in transform.py file, in the FILE_NAME variable
+- Install the requirements with `pip install -r requirements.tx`.
+- Set the file name to transform in `transform.py` file, in the `FILE_NAME` variable.
 - Run the script with `python transform.py`. You can also transform only one year, with `python transform.py --year 2022`, for example.
 - To convert the original data to a OCDS JSON, a patched schema with extensions is generated. If you want to re-generate
-the schema, you can run `python transform.py --generate-schema`
+the schema, you can run `python transform.py --generate-schema`.
 
 The script will generate one JSON file per year in a "ocds" folder.
