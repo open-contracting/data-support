@@ -58,11 +58,11 @@ procurement_method_map = {
     "Openbaar": "open",
     "Concurrentiegerichte dialoog": "selective",
     "Mededingingsprocedure met onderhandeling": "selective",
-    "Onderhandse procedure": "direct",
+    "Onderhandse procedure": "limited",
     "Innovatiepartnerschap": "selective",
-    "Niet-openbaar": "direct",
+    "Niet-openbaar": "selective",
     "Onderhandeling zonder bekendmaking": "limited",
-    "Marktconsultatie": "open",
+    "Marktconsultatie": None,
 }
 
 # Must match the mapping file columns for buyer and supplier, for example parties/0 is for buyer related columns
