@@ -1,0 +1,39 @@
+{
+  "definitions": {
+    "Tender": {
+      "properties": {
+        "registrationPeriod": {
+          "title": "Registration period",
+          "description": "The period when the bidders can register.",
+          "$ref": "#/definitions/Period"
+        },
+        "hasParticipationFees": {
+          "title": "Has Participation Fees?",
+          "description": "A true/false field to indicate whether there are participation fees or not.",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "isDigital": {
+          "title": "Is Digital?",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "Value": {
+      "properties": {
+        "hasTax": {
+          "title": "Has tax?",
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    }
+  }
+}

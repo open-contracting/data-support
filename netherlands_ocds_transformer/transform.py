@@ -5,6 +5,7 @@ import shutil
 from datetime import datetime
 from urllib.request import urlopen
 
+import json_merge_patch
 import numpy as np
 import ocdskit.combine
 import pandas as pd
@@ -83,8 +84,11 @@ def get_schema():
         "https://standard.open-contracting.org/schema/1__1__5/release-schema.json"
     ) as f:
         schema = json.load(f)
+    with open('local_extensions.json') as local_extension:
+        local = json.load(local_extension)
     builder = ProfileBuilder("1__1__5", EXTENSIONS)
     patched_schema = builder.patched_release_schema(schema=schema)
+    patched_schema = json_merge_patch.merge(patched_schema, local)
     with open("schema.json", "w") as outfile:
         outfile.write(json.dumps(patched_schema))
 
@@ -158,10 +162,10 @@ def set_award_id(row):
         main_id = (
             row["awards/suppliers/name"]
             if pd.isna(row["awards/suppliers/id"])
-            else str(row["awards/suppliers/id"])
-        )
+            else row["awards/suppliers/id"]
+        ) + "-" + str(row["row_number"])
         if not pd.isna(row["tender/lots/id"]):
-            return main_id + "-" + str(row["tender/lots/id"])
+            return main_id + "-" + row["tender/lots/id"]
         return main_id
     return None
 
@@ -186,7 +190,7 @@ def read_by_years(selected_year=None):
     :return:
     """
     date_column = "Publicatiedatum"
-    data = pd.read_excel(FILE_NAME, sheet_name=DATA_SHEET_NAME)
+    data = pd.read_excel(FILE_NAME, sheet_name=DATA_SHEET_NAME, dtype=str)
     years = pd.to_datetime(data[date_column], dayfirst=True).dt.year.unique()
     if selected_year:
         if selected_year not in years:
@@ -290,7 +294,7 @@ def complete_bids_information(data):
                 & (~data[f"{bid_path}/{position}/value"].isna()),
                 f"{bid_path}/{position}/id",
             ] = (
-                bid_id + "-" + data["tender/lots/id"].astype(str)
+                bid_id + "-" + data["tender/lots/id"]
             )
             data.loc[
                 (~data["tender/lots/id"].isna())
@@ -323,6 +327,8 @@ def transform_to_ocds(data):
 
     format_dates(data)
 
+    data["row_number"] = np.arange(len(data))
+
     # Code list map
     data["tender/mainProcurementCategory"] = data["tender/mainProcurementCategory"].map(
         category_map
@@ -334,7 +340,7 @@ def transform_to_ocds(data):
 
     replace_boolean_fields(data)
 
-    data["ocid"] = OCID_PREFIX + data["ocid"].astype(str)
+    data["ocid"] = OCID_PREFIX + data["ocid"]
 
     data["tender/contractPeriod/durationInDays"] = data[
         "tender/contractPeriod/durationInDays"
@@ -405,6 +411,9 @@ def transform_to_ocds(data):
     )
 
     complete_bids_information(data)
+
+    data = data.drop(['row_number'], axis=1)
+
     return data
 
 
