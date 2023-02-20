@@ -42,8 +42,7 @@ EXTENSIONS = [
     "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
     "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
     "https://raw.githubusercontent.com/open-contracting-extensions/eforms/latest/schema/profile/extension.json",
-    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/1.1"
-    "/extension.json ",
+    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/1.1/extension.json ",
 ]
 
 # OCDS codes mapping
@@ -176,11 +175,9 @@ def set_tag(row):
     :param row:
     :return:
     """
-    tags = []
-    if not pd.isna(row["tender/id"]):
-        tags.append("tender")
+    tags = set("tender")
     if not pd.isna(row["awards/suppliers/id"]):
-        tags.append("award")
+        tags.add("award")
     return ";".join(tags)
 
 
@@ -377,8 +374,6 @@ def transform_to_ocds(data):
 
     data["awards/id"] = data.apply(set_award_id, axis=1)
 
-    data["tag"] = data.apply(set_tag, axis=1)
-
     data["tender/documents/id"] = "1"
     data["tender/documents/documentType"] = "tenderNotice"
 
@@ -411,6 +406,8 @@ def transform_to_ocds(data):
     )
 
     complete_bids_information(data)
+
+    data["tag"] = data.apply(set_tag, axis=1)
 
     data = data.drop(['row_number'], axis=1)
 
