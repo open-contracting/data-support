@@ -42,7 +42,8 @@ EXTENSIONS = [
     "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
     "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
     "https://raw.githubusercontent.com/open-contracting-extensions/eforms/latest/schema/profile/extension.json",
-    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/1.1/extension.json ",
+    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/1.1"
+    "/extension.json",
 ]
 
 # OCDS codes mapping
