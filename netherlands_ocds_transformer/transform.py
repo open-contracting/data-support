@@ -343,6 +343,7 @@ def transform_to_ocds(data):
     data["tender/contractPeriod/durationInDays"] = data[
         "tender/contractPeriod/durationInDays"
     ].apply(year_month_to_days)
+    data["tender/contractPeriod/durationInDays"] = data["tender/contractPeriod/durationInDays"].astype('Int64')
 
     # Boolean to values
     data["tender/coveredBy"] = data["tender/coveredBy"].map(text_to_bool("GPA"))
@@ -399,9 +400,13 @@ def transform_to_ocds(data):
         data["awards/subcontracting/value/amount"] == "Onbekend",
         "awards/subcontracting/value/amount",
     ] = None
+
+    # As per https://extensions.open-contracting.org/en/extensions/subcontracting/master/#guidance
     data["awards/subcontracting/minimumPercentage"] = data.apply(
         set_subcontracting_percentage, axis=1
     )
+    data["awards/subcontracting/maximumPercentage"] = data["awards/subcontracting/minimumPercentage"]
+
     data["awards/subcontracting/value/amount"] = data.apply(
         delete_non_subcontracting_amounts, axis=1
     )
