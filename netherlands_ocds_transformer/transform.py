@@ -176,7 +176,7 @@ def set_tag(row):
     :param row:
     :return:
     """
-    tags = set("tender")
+    tags = {"tender"}
     if not pd.isna(row["awards/suppliers/id"]):
         tags.add("award")
     return ";".join(tags)
@@ -483,7 +483,7 @@ def save_csv(data, year):
     output = os.path.join(CSV_OUTPUT_DIR, year)
     if not os.path.isdir(output):
         os.makedirs(output)
-    data.to_csv(os.path.join(output, f"{year}.csv"), index=False, float_format="%.0f")
+    data.to_csv(os.path.join(output, f"{year}.csv"), index=False)
 
 
 def main():
