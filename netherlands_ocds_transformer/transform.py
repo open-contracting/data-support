@@ -89,8 +89,9 @@ def get_schema():
     builder = ProfileBuilder("1__1__5", EXTENSIONS)
     patched_schema = builder.patched_release_schema(schema=schema)
     patched_schema = json_merge_patch.merge(patched_schema, local)
-    with open("schema.json", "w") as outfile:
-        outfile.write(json.dumps(patched_schema))
+    with open("schema.json", "w") as f:
+        json.dump(patched_schema, f, ensure_ascii=False, indent=2)
+        f.write('\n')
 
 
 def text_to_bool(value=None):
