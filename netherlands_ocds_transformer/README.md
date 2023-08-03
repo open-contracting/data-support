@@ -11,4 +11,4 @@ to OCDS, using a mapping file that maps each column from the original dataset to
 - To convert the original data to a OCDS JSON, a patched schema with extensions is generated. If you want to re-generate
 the schema, you can run `python transform.py --generate-schema`.
 
-The script will generate one JSON file per year in a "ocds" folder.
+The script will generate one JSON file per year in the "ocds" folder.
