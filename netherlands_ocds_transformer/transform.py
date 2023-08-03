@@ -66,6 +66,10 @@ procurement_method_map = {
     "Marktconsultatie": None,
 }
 
+reserved_participation_map = {
+    "Sociale werkplaats en ondernemers": "shelteredWorkshop"
+}
+
 # Must match the mapping file columns for buyer and supplier, for example parties/0 is for buyer related columns
 buyer_path = "parties/0"
 supplier_path = "parties/1"
@@ -264,7 +268,6 @@ def set_parties_metadata(data):
         data, f"{supplier_path}/name", f"{supplier_path}/roles", "supplier"
     )
 
-
 def complete_bids_information(data):
     """
     Complete the metadata information required by OCDS, including bids id and measure name
@@ -336,6 +339,8 @@ def transform_to_ocds(data):
     data["tender/procurementMethod"] = data["tender/procurementMethodDetails"].map(
         procurement_method_map
     )
+    data["tender/otherRequirements/reservedParticipation"] = \
+        data["tender/otherRequirements/reservedParticipation"].map(reserved_participation_map)
 
     replace_boolean_fields(data)
 
