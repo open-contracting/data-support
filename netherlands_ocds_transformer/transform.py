@@ -268,6 +268,13 @@ def set_parties_metadata(data):
         data, f"{supplier_path}/name", f"{supplier_path}/roles", "supplier"
     )
 
+    # Due to a quality issue, sometimes a buyer is also a supplier
+    data.loc[
+        data["awards/suppliers/id"] == data["buyer/id"],
+        f"{supplier_path}/roles",
+    ] = "buyer;supplier"
+
+
 def complete_bids_information(data):
     """
     Complete the metadata information required by OCDS, including bids id and measure name
