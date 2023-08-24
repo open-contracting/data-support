@@ -9,12 +9,16 @@ class UzbekistanDeals(UzbekistanBaseSpider):
     export_outputs = {
         'main': {
             'name': 'uzbekistan_deals',
-            'date_column': 'deal_date',
-            'index': 'deal_date',
-            'formats': ['json', 'csv'],
+            'formats': ['csv'],
             'item_filter': None,
         }
     }
 
     # UzbekistanBaseSpider
     base_url = 'https://apietender.uzex.uz/api/common/DealsList'
+
+    def build_filters(self, from_parameter, to_parameter, **kwargs):
+        return {
+            "From": from_parameter,
+            "To": to_parameter,
+        }

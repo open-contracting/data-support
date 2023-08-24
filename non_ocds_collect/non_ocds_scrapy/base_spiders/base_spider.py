@@ -31,10 +31,11 @@ class BaseSpider(scrapy.Spider):
     date_format = 'datetime'
     date_required = False
 
-    def __init__(self, from_date=None, until_date=None, crawl_time=None, *args, **kwargs):
+    def __init__(self, from_date=None, until_date=None, crawl_time=None, last_total_count=None, *args, **kwargs):
         """
         :param from_date: the date from which to download data (see :ref:`spider-arguments`)
         :param until_date: the date until which to download data (see :ref:`spider-arguments`)
+        :param crawl_time: override the crawl's start time
         """
 
         super().__init__(*args, **kwargs)
@@ -51,12 +52,14 @@ class BaseSpider(scrapy.Spider):
         if crawl_time:
             self.crawl_time = crawl_time
         else:
-            self.crawl_time = datetime.strftime(datetime.now(), '%Y-%m-%dT%H:%M:%S')
+            self.crawl_time = datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M:%S')
+        self.last_total_count = last_total_count
 
         spider_arguments = {
             'from_date': from_date,
             'until_date': until_date,
             'crawl_time': crawl_time,
+            'last_total_count': last_total_count,
         }
         spider_arguments.update(kwargs)
 
@@ -67,7 +70,7 @@ class BaseSpider(scrapy.Spider):
         spider = super(BaseSpider, cls).from_crawler(crawler, *args, **kwargs)
 
         try:
-            spider.crawl_time = datetime.strptime(spider.crawl_time, '%Y-%m-%dT%H:%M:%S')
+            spider.crawl_time = datetime.strptime(spider.crawl_time, '%Y-%m-%d %H:%M:%S')
         except ValueError as e:
             raise UsageError(f'spider argument `crawl_time`: invalid date value: {e}')
 
@@ -87,11 +90,6 @@ class BaseSpider(scrapy.Spider):
                     spider.until_date = datetime.strptime(spider.until_date, spider.date_format)
             except ValueError as e:
                 raise UsageError(f'spider argument `until_date`: invalid date value: {e}')
-
-        # DatabaseStore-related logic.
-        if crawler.settings['DATABASE_URL']:
-            if not spider.crawl_time:
-                raise UsageError("spider argument `crawl_time`: can't be blank if `DATABASE_URL` is set")
 
         return spider
 

@@ -9,9 +9,7 @@ class UzbekistanCompletedDeals(UzbekistanBaseSpider):
     export_outputs = {
         'main': {
             'name': 'uzbekistan_completed_deals',
-            'date_column': 'deal_date',
-            'index': 'deal_date',
-            'formats': ['json', 'csv'],
+            'formats': ['csv'],
             'item_filter': None,
         }
     }

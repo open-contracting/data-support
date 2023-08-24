@@ -25,7 +25,6 @@ FILES_STORE = os.getenv('FILES_STORE', 'data')
 FEED_EXPORTERS = {
     'csv': 'non_ocds_scrapy.exporters.HeadlessCsvItemExporter',
 }
-DATABASE_URL = None
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 CONCURRENT_REQUESTS = 32
@@ -64,9 +63,9 @@ CONCURRENT_REQUESTS = 32
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
-EXTENSIONS = {
-    'non_ocds_scrapy.extensions.DatabaseStore': 900,
-}
+#EXTENSIONS = {
+#
+#}
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
@@ -99,3 +98,5 @@ EXTENSIONS = {
 REQUEST_FINGERPRINTER_IMPLEMENTATION = "2.7"
 TWISTED_REACTOR = "twisted.internet.asyncioreactor.AsyncioSelectorReactor"
 FEED_EXPORT_ENCODING = "utf-8"
+
+COMMANDS_MODULE = 'non_ocds_scrapy.commands'

@@ -12,15 +12,12 @@ class UzbekistanAuctions(UzbekistanBaseSpider):
     export_outputs = {
         'main': {
             'name': 'uzbekistan_auction',
-            'date_column': 'deal_date',
-            'index': 'deal_date',
-            'formats': ['json', 'csv'],
+            'formats': ['csv'],
             'item_filter': UzbekistanAuctionFilter,
         },
         'secondary': {
             'name': 'uzbekistan_auction_item',
-            'index': 'lot_id',
-            'formats': ['json', 'csv'],
+            'formats': ['csv'],
             'item_filter': UzbekistanAuctionProductFilter,
             }
         }

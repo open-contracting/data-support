@@ -7,7 +7,7 @@ from non_ocds_scrapy.base_spiders.export_file_spider import ExportFileSpider
 
 class UzbekistanBaseSpider(ExportFileSpider):
 
-    page_size = 1000
+    page_size = 10
     parse_callback = 'parse'
 
     # BaseSpider
@@ -19,17 +19,23 @@ class UzbekistanBaseSpider(ExportFileSpider):
         self.parse_callback = getattr(self, self.parse_callback)
 
     def start_requests(self):
-        yield self.build_request(self.build_filters(0, self.page_size), callback=self.parse_list)
+        request = self.build_request(self.build_filters(0, self.page_size), callback=self.parse_list)
+        yield request
 
     def parse(self, response, **kwargs):
         for item in response.json():
             yield item
 
     def parse_list(self, response):
-        yield from self.parse_callback(response)
         data = response.json()
         item = data[0]
         range_end = item['total_count']
+        if self.last_total_count:
+            range_end = range_end - self.last_total_count
+        # No new data, so the first page doesn't need to be scraped.
+        if range_end == 0:
+            return
+        yield from self.parse_callback(response)
         from_parameter = self.page_size + 1
         while from_parameter < range_end:
             to_parameter = from_parameter + self.page_size
@@ -50,6 +56,4 @@ class UzbekistanBaseSpider(ExportFileSpider):
         return {
             "from": from_parameter,
             "to": to_parameter,
-            "date_from": self.from_date.strftime("%d.%m.%Y %H:%M"),
-            "date_to": self.until_date.strftime("%d.%m.%Y %H:%M")
         }

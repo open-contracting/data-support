@@ -56,5 +56,6 @@ class ExportFileSpider(BaseSpider):
         }
         settings.setdict(custom_settings, priority='spider')
 
-    def get_file_store_directory(self):
-        return os.path.join(FILES_STORE, self.name, self.crawl_time.strftime('%Y-%m-%d %H:%M:%S'))
+    @classmethod
+    def get_file_store_directory(cls):
+        return os.path.join(FILES_STORE, cls.name, cls.crawl_time.strftime('%Y-%m-%d %H:%M:%S'))
