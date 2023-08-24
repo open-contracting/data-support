@@ -20,9 +20,7 @@ FILE_NAME = "Dataset_TenderNed_2016_2022.xlsx"
 DATA_SHEET_NAME = "Dataset 2016-2022"
 OCDS_MAP_COLUMN = "OCDS path"
 TENDERNED_SOURCE_COLUMN = "Veldnaam TenderNed"
-OCDS_DATA_SET_URI = (
-    "https://www.tenderned.nl/cms/nl/aanbesteden-in-cijfers/datasets-aanbestedingen"
-)
+OCDS_DATA_SET_URI = "https://www.tenderned.nl/cms/nl/aanbesteden-in-cijfers/datasets-aanbestedingen"
 PUBLISHER_NAME = "Ministry of Economic Affairs and Climate Policy"
 
 # OCDS Extensions to use
@@ -66,9 +64,7 @@ procurement_method_map = {
     "Marktconsultatie": None,
 }
 
-reserved_participation_map = {
-    "Sociale werkplaats en ondernemers": "shelteredWorkshop"
-}
+reserved_participation_map = {"Sociale werkplaats en ondernemers": "shelteredWorkshop"}
 
 # Must match the mapping file columns for buyer and supplier, for example parties/0 is for buyer related columns
 buyer_path = "parties/0"
@@ -84,18 +80,16 @@ bids_details = {
 
 
 def get_schema():
-    with urlopen(
-        "https://standard.open-contracting.org/schema/1__1__5/release-schema.json"
-    ) as f:
+    with urlopen("https://standard.open-contracting.org/schema/1__1__5/release-schema.json") as f:
         schema = json.load(f)
-    with open('local_extensions.json') as local_extension:
+    with open("local_extensions.json") as local_extension:
         local = json.load(local_extension)
     builder = ProfileBuilder("1__1__5", EXTENSIONS)
     patched_schema = builder.patched_release_schema(schema=schema)
     patched_schema = json_merge_patch.merge(patched_schema, local)
     with open("schema.json", "w") as f:
         json.dump(patched_schema, f, ensure_ascii=False, indent=2)
-        f.write('\n')
+        f.write("\n")
 
 
 def text_to_bool(value=None):
@@ -161,14 +155,12 @@ def set_award_id(row):
     :param row:
     :return:
     """
-    if not pd.isna(row["awards/suppliers/id"]) or not pd.isna(
-        row["awards/suppliers/name"]
-    ):
+    if not pd.isna(row["awards/suppliers/id"]) or not pd.isna(row["awards/suppliers/name"]):
         main_id = (
-            row["awards/suppliers/name"]
-            if pd.isna(row["awards/suppliers/id"])
-            else row["awards/suppliers/id"]
-        ) + "-" + str(row["row_number"])
+            (row["awards/suppliers/name"] if pd.isna(row["awards/suppliers/id"]) else row["awards/suppliers/id"])
+            + "-"
+            + str(row["row_number"])
+        )
         if not pd.isna(row["tender/lots/id"]):
             return main_id + "-" + row["tender/lots/id"]
         return main_id
@@ -197,9 +189,7 @@ def read_by_years(selected_year=None):
     years = pd.to_datetime(data[date_column], dayfirst=True).dt.year.unique()
     if selected_year:
         if selected_year not in years:
-            raise ValueError(
-                f"Data from {selected_year} ({date_column}) doesn't exist in the selected dataset"
-            )
+            raise ValueError(f"Data from {selected_year} ({date_column}) doesn't exist in the selected dataset")
         years = [selected_year]
     grouped = data.groupby(pd.to_datetime(data[date_column], dayfirst=True).dt.year)
     for year in years:
@@ -213,9 +203,7 @@ def rename_columns(data):
     :return:
     """
     mapping_ocds = pd.read_csv("mapping_ocds.csv")
-    mapping_ocds[TENDERNED_SOURCE_COLUMN] = (
-        mapping_ocds[TENDERNED_SOURCE_COLUMN].str.upper().str.strip()
-    )
+    mapping_ocds[TENDERNED_SOURCE_COLUMN] = mapping_ocds[TENDERNED_SOURCE_COLUMN].str.upper().str.strip()
     new_column_names = pd.Series(
         mapping_ocds[OCDS_MAP_COLUMN].values,
         index=mapping_ocds[TENDERNED_SOURCE_COLUMN],
@@ -254,19 +242,15 @@ def set_parties_metadata(data):
     data[f"{buyer_path}/roles"] = "buyer"
     data[f"{supplier_path}/id"] = data["awards/suppliers/id"]
     data.loc[
-        (pd.isna(data["awards/suppliers/id"]))
-        & (~pd.isna(data["awards/suppliers/name"])),
+        (pd.isna(data["awards/suppliers/id"])) & (~pd.isna(data["awards/suppliers/name"])),
         "awards/suppliers/id",
     ] = data["awards/suppliers/name"]
     data.loc[
-        (pd.isna(data[f"{supplier_path}/id"]))
-        & (~pd.isna(data["awards/suppliers/name"])),
+        (pd.isna(data[f"{supplier_path}/id"])) & (~pd.isna(data["awards/suppliers/name"])),
         f"{supplier_path}/id",
     ] = data["awards/suppliers/name"]
     data[f"{supplier_path}/name"] = data["awards/suppliers/name"]
-    set_value_when_not_na(
-        data, f"{supplier_path}/name", f"{supplier_path}/roles", "supplier"
-    )
+    set_value_when_not_na(data, f"{supplier_path}/name", f"{supplier_path}/roles", "supplier")
 
     # Due to a quality issue, sometimes a buyer is also a supplier
     data.loc[
@@ -285,12 +269,8 @@ def complete_bids_information(data):
     for key, value in bids_details.items():
         position = int(value)
         bid_id = str(position + 1)
-        set_value_when_not_na(
-            data, f"{bid_path}/{position}/value", f"{bid_path}/{position}/id", bid_id
-        )
-        set_value_when_not_na(
-            data, f"{bid_path}/{position}/value", f"{bid_path}/{position}/measure", key
-        )
+        set_value_when_not_na(data, f"{bid_path}/{position}/value", f"{bid_path}/{position}/id", bid_id)
+        set_value_when_not_na(data, f"{bid_path}/{position}/value", f"{bid_path}/{position}/measure", key)
         # Some measures only have currency but not values, we remove that ones
         data.loc[
             data[f"{bid_path}/{position}/value"].isna(),
@@ -299,15 +279,13 @@ def complete_bids_information(data):
         # Requests and electronicBids change by lot, so if a lot exists, we use the lot id as part of the bid id
         if key == "requests" or key == "electronicBids":
             data.loc[
-                (~data["tender/lots/id"].isna())
-                & (~data[f"{bid_path}/{position}/value"].isna()),
+                (~data["tender/lots/id"].isna()) & (~data[f"{bid_path}/{position}/value"].isna()),
                 f"{bid_path}/{position}/id",
             ] = (
                 bid_id + "-" + data["tender/lots/id"]
             )
             data.loc[
-                (~data["tender/lots/id"].isna())
-                & (~data[f"{bid_path}/{position}/value"].isna()),
+                (~data["tender/lots/id"].isna()) & (~data[f"{bid_path}/{position}/value"].isna()),
                 f"{bid_path}/{position}/relatedLot",
             ] = data["tender/lots/id"]
 
@@ -316,10 +294,7 @@ def set_subcontracting_percentage(row):
     if not pd.isna(row["awards/subcontracting/value/amount"]) and "%" in str(
         row["awards/subcontracting/value/amount"]
     ):
-        return (
-            float(row["awards/subcontracting/value/amount"].strip().split("%")[0])
-            / 100.00
-        )
+        return float(row["awards/subcontracting/value/amount"].strip().split("%")[0]) / 100.00
     return None
 
 
@@ -339,35 +314,28 @@ def transform_to_ocds(data):
     data["row_number"] = np.arange(len(data))
 
     # Code list map
-    data["tender/mainProcurementCategory"] = data["tender/mainProcurementCategory"].map(
-        category_map
-    )
+    data["tender/mainProcurementCategory"] = data["tender/mainProcurementCategory"].map(category_map)
     data["tender/awardCriteria"] = data["tender/awardCriteriaDetails"].map(award_map)
-    data["tender/procurementMethod"] = data["tender/procurementMethodDetails"].map(
-        procurement_method_map
-    )
-    data["tender/otherRequirements/reservedParticipation"] = \
-        data["tender/otherRequirements/reservedParticipation"].map(reserved_participation_map)
+    data["tender/procurementMethod"] = data["tender/procurementMethodDetails"].map(procurement_method_map)
+    data["tender/otherRequirements/reservedParticipation"] = data[
+        "tender/otherRequirements/reservedParticipation"
+    ].map(reserved_participation_map)
 
     replace_boolean_fields(data)
 
     data["ocid"] = OCID_PREFIX + data["ocid"]
 
-    data["tender/contractPeriod/durationInDays"] = data[
-        "tender/contractPeriod/durationInDays"
-    ].apply(year_month_to_days)
-    data["tender/contractPeriod/durationInDays"] = data["tender/contractPeriod/durationInDays"].astype('Int64')
+    data["tender/contractPeriod/durationInDays"] = data["tender/contractPeriod/durationInDays"].apply(
+        year_month_to_days
+    )
+    data["tender/contractPeriod/durationInDays"] = data["tender/contractPeriod/durationInDays"].astype("Int64")
 
     # Boolean to values
     data["tender/coveredBy"] = data["tender/coveredBy"].map(text_to_bool("GPA"))
-    data["parties/1/details/scale"] = data["parties/1/details/scale"].map(
-        text_to_bool("sme")
-    )
+    data["parties/1/details/scale"] = data["parties/1/details/scale"].map(text_to_bool("sme"))
 
     # Values to boolean
-    data["tender/techniques/hasFrameworkAgreement"] = np.where(
-        data["tender/nature"] == "Raamovereenkomst", True, None
-    )
+    data["tender/techniques/hasFrameworkAgreement"] = np.where(data["tender/nature"] == "Raamovereenkomst", True, None)
     data["tender/techniques/hasDynamicPurchasingSystem"] = np.where(
         data["tender/nature"] == "Instellen van dynamisch aankoopsysteem (DAS)",
         True,
@@ -380,9 +348,7 @@ def transform_to_ocds(data):
     )
 
     # OCDS metadata and required IDs
-    set_value_when_not_na(
-        data, "tender/classification/description", "tender/classification/scheme", "CPV"
-    )
+    set_value_when_not_na(data, "tender/classification/description", "tender/classification/scheme", "CPV")
     set_parties_metadata(data)
 
     data["tender/deliveryAddresses/id"] = "1"
@@ -402,11 +368,7 @@ def transform_to_ocds(data):
     data.loc[data["tender/id"].isna(), "tender/id"] = data["id"]
 
     # Create a unique release id
-    data["id"] = (
-        data["id"].astype(str)
-        + "-"
-        + data.apply(lambda x: hash(tuple(x)), axis=1).astype(str)
-    )
+    data["id"] = data["id"].astype(str) + "-" + data.apply(lambda x: hash(tuple(x)), axis=1).astype(str)
 
     # Remove non-numeric values from amounts
     data.loc[
@@ -415,20 +377,16 @@ def transform_to_ocds(data):
     ] = None
 
     # As per https://extensions.open-contracting.org/en/extensions/subcontracting/master/#guidance
-    data["awards/subcontracting/minimumPercentage"] = data.apply(
-        set_subcontracting_percentage, axis=1
-    )
+    data["awards/subcontracting/minimumPercentage"] = data.apply(set_subcontracting_percentage, axis=1)
     data["awards/subcontracting/maximumPercentage"] = data["awards/subcontracting/minimumPercentage"]
 
-    data["awards/subcontracting/value/amount"] = data.apply(
-        delete_non_subcontracting_amounts, axis=1
-    )
+    data["awards/subcontracting/value/amount"] = data.apply(delete_non_subcontracting_amounts, axis=1)
 
     complete_bids_information(data)
 
     data["tag"] = data.apply(set_tag, axis=1)
 
-    data = data.drop(['row_number'], axis=1)
+    data = data.drop(["row_number"], axis=1)
 
     return data
 
@@ -460,9 +418,7 @@ def format_dates(data_frame):
     """
     for column in data_frame.columns:
         if "date" in column.lower():
-            data_frame[column] = pd.to_datetime(
-                data_frame[column], dayfirst=True, format="%d-%m-%Y", errors="coerce"
-            )
+            data_frame[column] = pd.to_datetime(data_frame[column], dayfirst=True, format="%d-%m-%Y", errors="coerce")
             data_frame[column] = data_frame[column].dt.strftime("%Y-%m-%dT00:00:00Z")
 
 
@@ -507,7 +463,7 @@ def save_csv(data, year):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--year", type=int)
-    parser.add_argument("--generate-schema", action='store_true')
+    parser.add_argument("--generate-schema", action="store_true")
     args = parser.parse_args()
     initial_setup(args.generate_schema)
     for year, data in read_by_years(selected_year=args.year):
