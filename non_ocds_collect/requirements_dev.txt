@@ -20,7 +20,6 @@ certifi==2023.7.22
     # via
     #   -r requirements.txt
     #   requests
-    #   sentry-sdk
 cffi==1.15.1
     # via
     #   -r requirements.txt
@@ -102,6 +101,10 @@ lxml==4.9.3
     #   scrapy
 mccabe==0.7.0
     # via flake8
+numpy==1.25.2
+    # via
+    #   -r requirements.txt
+    #   pandas
 packaging==23.1
     # via
     #   -r requirements.txt
@@ -109,7 +112,8 @@ packaging==23.1
     #   parsel
     #   pytest
     #   scrapy
-    #   scrapyd
+pandas==2.0.3
+    # via -r requirements.txt
 parsel==1.8.1
     # via
     #   -r requirements.txt
@@ -158,11 +162,16 @@ pytest==7.4.0
     # via
     #   -r requirements_dev.in
     #   pytest-cov
-    #   pytest-order
 pytest-cov==4.1.0
     # via -r requirements_dev.in
-pytest-order==1.1.0
-    # via -r requirements_dev.in
+python-dateutil==2.8.2
+    # via
+    #   -r requirements.txt
+    #   pandas
+pytz==2023.3
+    # via
+    #   -r requirements.txt
+    #   pandas
 queuelib==1.6.2
     # via
     #   -r requirements.txt
@@ -172,22 +181,12 @@ requests==2.31.0
     #   -r requirements.txt
     #   coveralls
     #   requests-file
-    #   scrapyd-client
     #   tldextract
 requests-file==1.5.1
     # via
     #   -r requirements.txt
     #   tldextract
 scrapy==2.10.0
-    # via
-    #   -r requirements.txt
-    #   scrapyd
-    #   scrapyd-client
-scrapyd==1.4.2
-    # via -r requirements.txt
-scrapyd-client==1.2.3
-    # via -r requirements.txt
-sentry-sdk==1.29.2
     # via -r requirements.txt
 service-identity==23.1.0
     # via
@@ -197,6 +196,7 @@ six==1.16.0
     # via
     #   -r requirements.txt
     #   automat
+    #   python-dateutil
     #   requests-file
 tldextract==3.4.4
     # via
@@ -207,41 +207,36 @@ tomli==2.0.1
     #   build
     #   coverage
     #   pip-tools
+    #   pyproject-hooks
     #   pytest
 twisted==22.10.0
     # via
     #   -r requirements.txt
     #   scrapy
-    #   scrapyd
 typing-extensions==4.7.1
     # via
     #   -r requirements.txt
     #   twisted
-uberegg==0.1.1
+tzdata==2023.3
     # via
     #   -r requirements.txt
-    #   scrapyd-client
+    #   pandas
 urllib3==2.0.4
     # via
     #   -r requirements.txt
     #   requests
-    #   scrapyd-client
-    #   sentry-sdk
 w3lib==2.1.2
     # via
     #   -r requirements.txt
     #   itemloaders
     #   parsel
     #   scrapy
-    #   scrapyd
-    #   scrapyd-client
 wheel==0.41.1
     # via pip-tools
 zope-interface==6.0
     # via
     #   -r requirements.txt
     #   scrapy
-    #   scrapyd
     #   twisted
 
 # The following packages are considered to be unsafe in a requirements file:

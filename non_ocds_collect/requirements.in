@@ -1,7 +1,3 @@
+pandas
 psycopg2
-requests
 scrapy
-scrapyd
-scrapyd-client
-sentry-sdk
-twisted

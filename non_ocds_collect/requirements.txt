@@ -12,9 +12,7 @@ attrs==23.1.0
 automat==22.10.0
     # via twisted
 certifi==2023.7.22
-    # via
-    #   requests
-    #   sentry-sdk
+    # via requests
 cffi==1.15.1
     # via cryptography
 charset-normalizer==3.2.0
@@ -55,11 +53,14 @@ lxml==4.9.3
     # via
     #   parsel
     #   scrapy
+numpy==1.25.2
+    # via pandas
 packaging==23.1
     # via
     #   parsel
     #   scrapy
-    #   scrapyd
+pandas==2.0.3
+    # via -r requirements.in
 parsel==1.8.1
     # via
     #   itemloaders
@@ -80,60 +81,45 @@ pydispatcher==2.0.7
     # via scrapy
 pyopenssl==23.2.0
     # via scrapy
+python-dateutil==2.8.2
+    # via pandas
+pytz==2023.3
+    # via pandas
 queuelib==1.6.2
     # via scrapy
 requests==2.31.0
     # via
-    #   -r requirements.in
     #   requests-file
-    #   scrapyd-client
     #   tldextract
 requests-file==1.5.1
     # via tldextract
 scrapy==2.10.0
-    # via
-    #   -r requirements.in
-    #   scrapyd
-    #   scrapyd-client
-scrapyd==1.4.2
-    # via -r requirements.in
-scrapyd-client==1.2.3
-    # via -r requirements.in
-sentry-sdk==1.29.2
     # via -r requirements.in
 service-identity==23.1.0
     # via scrapy
 six==1.16.0
     # via
     #   automat
+    #   python-dateutil
     #   requests-file
 tldextract==3.4.4
     # via scrapy
 twisted==22.10.0
-    # via
-    #   -r requirements.in
-    #   scrapy
-    #   scrapyd
+    # via scrapy
 typing-extensions==4.7.1
     # via twisted
-uberegg==0.1.1
-    # via scrapyd-client
+tzdata==2023.3
+    # via pandas
 urllib3==2.0.4
-    # via
-    #   requests
-    #   scrapyd-client
-    #   sentry-sdk
+    # via requests
 w3lib==2.1.2
     # via
     #   itemloaders
     #   parsel
     #   scrapy
-    #   scrapyd
-    #   scrapyd-client
 zope-interface==6.0
     # via
     #   scrapy
-    #   scrapyd
     #   twisted
 
 # The following packages are considered to be unsafe in a requirements file:
