@@ -3,9 +3,7 @@ class UzbekistanAuctionFilter:
         self.feed_options = feed_options
 
     def accepts(self, item):
-        if "product_name" in item:
-            return False
-        return True
+        return "product_name" not in item
 
 
 class UzbekistanAuctionProductFilter:
@@ -13,6 +11,4 @@ class UzbekistanAuctionProductFilter:
         self.feed_options = feed_options
 
     def accepts(self, item):
-        if "product_name" in item:
-            return True
-        return False
+        return "product_name" in item
