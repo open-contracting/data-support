@@ -20,8 +20,9 @@ repos:
     hooks:
       - id: pip-compile
         name: pip-compile requirements.in
-        files: ^requirements\.(in|txt)$
+        files: ^non_ocds_collect/requirements\.(in|txt)$
+        args: [non_ocds_collect/requirements.in]
       - id: pip-compile
         name: pip-compile requirements_dev.in
-        files: ^requirements(_dev)?\.(in|txt)$
-        args: [requirements_dev.in]
+        files: ^non_ocds_collect/requirements(_dev)?\.(in|txt)$
+        args: [non_ocds_collect/requirements_dev.in]
