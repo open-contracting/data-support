@@ -19,7 +19,8 @@ class IncrementalUpdate(ScrapyCommand):
     def add_options(self, parser):
         ScrapyCommand.add_options(self, parser)
         parser.add_argument('--total_count_field', type=str,
-                            help='The data field to use for checking for the number of items downloaded the last time.')
+                            help='The data field to use for checking for the number of items downloaded the last '
+                                 'time.')
         parser.add_argument('--crawl_time', type=str,
                             help='The crawl_time where previous data was stored')
 
