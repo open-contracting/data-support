@@ -67,8 +67,6 @@ parsel==1.8.1
     #   scrapy
 protego==0.3.0
     # via scrapy
-psycopg2==2.9.7
-    # via -r requirements.in
 pyasn1==0.5.0
     # via
     #   pyasn1-modules

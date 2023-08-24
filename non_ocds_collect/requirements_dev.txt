@@ -24,6 +24,8 @@ cffi==1.15.1
     # via
     #   -r requirements.txt
     #   cryptography
+cfgv==3.4.0
+    # via pre-commit
 charset-normalizer==3.2.0
     # via
     #   -r requirements.txt
@@ -52,6 +54,8 @@ cssselect==1.2.0
     #   -r requirements.txt
     #   parsel
     #   scrapy
+distlib==0.3.7
+    # via virtualenv
 docopt==0.6.2
     # via coveralls
 exceptiongroup==1.1.3
@@ -60,12 +64,15 @@ filelock==3.12.2
     # via
     #   -r requirements.txt
     #   tldextract
+    #   virtualenv
 flake8==6.1.0
     # via -r requirements_dev.in
 hyperlink==21.0.0
     # via
     #   -r requirements.txt
     #   twisted
+identify==2.5.27
+    # via pre-commit
 idna==3.4
     # via
     #   -r requirements.txt
@@ -101,6 +108,8 @@ lxml==4.9.3
     #   scrapy
 mccabe==0.7.0
     # via flake8
+nodeenv==1.8.0
+    # via pre-commit
 numpy==1.25.2
     # via
     #   -r requirements.txt
@@ -121,16 +130,16 @@ parsel==1.8.1
     #   scrapy
 pip-tools==7.3.0
     # via -r requirements_dev.in
+platformdirs==3.10.0
+    # via virtualenv
 pluggy==1.2.0
     # via pytest
+pre-commit==3.3.3
+    # via -r requirements_dev.in
 protego==0.3.0
     # via
     #   -r requirements.txt
     #   scrapy
-psycopg2==2.9.7
-    # via -r requirements.txt
-psycopg2-binary==2.9.7
-    # via -r requirements_dev.in
 pyasn1==0.5.0
     # via
     #   -r requirements.txt
@@ -172,6 +181,8 @@ pytz==2023.3
     # via
     #   -r requirements.txt
     #   pandas
+pyyaml==6.0.1
+    # via pre-commit
 queuelib==1.6.2
     # via
     #   -r requirements.txt
@@ -225,6 +236,8 @@ urllib3==2.0.4
     # via
     #   -r requirements.txt
     #   requests
+virtualenv==20.24.3
+    # via pre-commit
 w3lib==2.1.2
     # via
     #   -r requirements.txt
