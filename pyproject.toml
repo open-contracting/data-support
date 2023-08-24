@@ -4,4 +4,3 @@ line-length = 119
 [tool.isort]
 profile = 'black'
 line_length = 119
-known_first_party = ["non_ocds_scrapy"]
