@@ -4,11 +4,11 @@ from setuptools import find_packages, setup
 # https://github.com/scrapy/scrapyd-client/blob/v1.1.0/README.rst
 
 setup(
-    packages=find_packages(exclude=['tests', 'tests.*']),
+    packages=find_packages(exclude=["tests", "tests.*"]),
     include_package_data=True,
     entry_points={
-        'scrapy': [
-            'settings = non_ocds_scrapy.settings',
+        "scrapy": [
+            "settings = non_ocds_scrapy.settings",
         ],
     },
 )

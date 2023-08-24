@@ -6,12 +6,11 @@ from non_ocds_scrapy.base_spiders.export_file_spider import ExportFileSpider
 
 
 class UzbekistanBaseSpider(ExportFileSpider):
-
     page_size = 10
-    parse_callback = 'parse'
+    parse_callback = "parse"
 
     # BaseSpider
-    default_from_date = '2022-01-01T00:00:00'
+    default_from_date = "2022-01-01T00:00:00"
     date_required = True
 
     def __init__(self, *args, **kwargs):
@@ -29,7 +28,7 @@ class UzbekistanBaseSpider(ExportFileSpider):
     def parse_list(self, response):
         data = response.json()
         item = data[0]
-        range_end = item['total_count']
+        range_end = item["total_count"]
         if self.last_total_count:
             range_end = range_end - self.last_total_count
         # No new data, so the first page doesn't need to be scraped.
@@ -46,10 +45,10 @@ class UzbekistanBaseSpider(ExportFileSpider):
     def build_request(self, filters, callback=None):
         return scrapy.Request(
             self.base_url,
-            method='POST',
+            method="POST",
             body=json.dumps(filters),
-            headers={'Content-Type': 'application/json'},
-            callback=callback if callback else self.parse
+            headers={"Content-Type": "application/json"},
+            callback=callback if callback else self.parse,
         )
 
     def build_filters(self, from_parameter, to_parameter, **kwargs):
