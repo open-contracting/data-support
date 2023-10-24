@@ -17,3 +17,7 @@ jobs:
         run: curl -s -S --retry 3 $BASEDIR/tests/install.sh | bash -
       - shell: bash
         run: curl -s -S --retry 3 $BASEDIR/tests/script.sh | bash -
+      - working-directory: netherlands_ocds_transformer
+        run: |
+          pip install -r requirements.txt
+          pytest /tmp/test_requirements.py
