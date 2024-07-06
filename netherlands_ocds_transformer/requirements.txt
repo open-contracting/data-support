@@ -14,7 +14,7 @@ btrees==5.1
     # via zodb
 cattrs==23.1.2
     # via requests-cache
-certifi==2023.7.22
+certifi==2024.7.4
     # via requests
 cffi==1.16.0
     # via persistent
