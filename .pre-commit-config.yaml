@@ -19,6 +19,9 @@ repos:
     rev: 0.4.4
     hooks:
       - id: pip-compile
-        name: pip-compile netherlands_ocds_transformer/requirements.in
-        args: [netherlands_ocds_transformer/requirements.in, -o, netherlands_ocds_transformer/requirements.txt]
-        files: ^netherlands_ocds_transformer/requirements\.(in|txt)$
+        name: pip-compile requirements.in
+        args: [requirements.in, -o, requirements.txt]
+      - id: pip-compile
+        name: pip-compile requirements_dev.in
+        args: [requirements_dev.in, -o, requirements_dev.txt]
+        files: ^requirements(_dev)?\.(in|txt)$
