@@ -60,6 +60,8 @@ ijson==3.2.3
     #   -r requirements.txt
     #   flattentool
     #   ocdskit
+iniconfig==2.0.0
+    # via pytest
 json-merge-patch==0.2
     # via
     #   -r requirements.txt
@@ -99,6 +101,8 @@ openpyxl==3.1.2
     # via
     #   -r requirements.txt
     #   flattentool
+packaging==24.1
+    # via pytest
 pandas==1.5.3
     # via -r requirements.txt
 persistent==5.1
@@ -111,12 +115,16 @@ platformdirs==3.11.0
     #   -r requirements.txt
     #   requests-cache
     #   virtualenv
+pluggy==1.5.0
+    # via pytest
 pre-commit==3.8.0
     # via -r requirements_dev.in
 pycparser==2.21
     # via
     #   -r requirements.txt
     #   cffi
+pytest==8.3.2
+    # via -r requirements_dev.in
 python-dateutil==2.8.2
     # via
     #   -r requirements.txt
