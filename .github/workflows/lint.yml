@@ -31,7 +31,5 @@ jobs:
         run: curl -s -S --retry 3 $BASEDIR/tests/install.sh | bash -
       - shell: bash
         run: curl -s -S --retry 3 $BASEDIR/tests/script.sh | bash -
-      - run: pip install pytest -r netherlands_ocds_transformer/requirements.txt
-      - env:
-          STANDARD_MAINTENANCE_SCRIPTS_FILES: netherlands_ocds_transformer/requirements.in
-        run: pytest /tmp/test_requirements.py
+      - run: pip install pytest -r requirements.txt
+      - run: pytest /tmp/test_requirements.py
