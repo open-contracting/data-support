@@ -2,9 +2,9 @@
 name = "data-support"
 version = "0.0.0"
 
-[tool.black]
+[tool.ruff]
 line-length = 119
+target-version = "py311"
 
-[tool.isort]
-profile = 'black'
-line_length = 119
+[tool.ruff.lint]
+select = ["E", "F", "W"]

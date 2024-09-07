@@ -281,9 +281,7 @@ def complete_bids_information(data):
             data.loc[
                 (~data["tender/lots/id"].isna()) & (~data[f"{bid_path}/{position}/value"].isna()),
                 f"{bid_path}/{position}/id",
-            ] = (
-                bid_id + "-" + data["tender/lots/id"]
-            )
+            ] = bid_id + "-" + data["tender/lots/id"]
             data.loc[
                 (~data["tender/lots/id"].isna()) & (~data[f"{bid_path}/{position}/value"].isna()),
                 f"{bid_path}/{position}/relatedLot",
