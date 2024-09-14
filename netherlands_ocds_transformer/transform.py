@@ -142,8 +142,9 @@ def year_month_to_days(row):
     if "Maande" in row:
         # month
         return int(row.split(" Maande")[0]) * 30
-    elif "Jaren" in row:
+    if "Jaren" in row:
         return int(row.split(" Jaren")[0]) * 365
+    return None
 
 
 def set_award_id(row):
@@ -208,8 +209,7 @@ def rename_columns(data):
         mapping_ocds[OCDS_MAP_COLUMN].values,
         index=mapping_ocds[TENDERNED_SOURCE_COLUMN],
     ).to_dict()
-    data = data.rename(columns=str.upper).rename(columns=new_column_names)
-    return data
+    return data.rename(columns=str.upper).rename(columns=new_column_names)
 
 
 def set_parties_metadata(data):
@@ -277,7 +277,7 @@ def complete_bids_information(data):
             f"{bid_path}/{position}/currency",
         ] = None
         # Requests and electronicBids change by lot, so if a lot exists, we use the lot id as part of the bid id
-        if key == "requests" or key == "electronicBids":
+        if key in {"requests", "electronicBids"}:
             data.loc[
                 (~data["tender/lots/id"].isna()) & (~data[f"{bid_path}/{position}/value"].isna()),
                 f"{bid_path}/{position}/id",
@@ -333,10 +333,14 @@ def transform_to_ocds(data):
     data["parties/1/details/scale"] = data["parties/1/details/scale"].map(text_to_bool("sme"))
 
     # Values to boolean
-    data["tender/techniques/hasFrameworkAgreement"] = np.where(data["tender/nature"] == "Raamovereenkomst", True, None)
+    data["tender/techniques/hasFrameworkAgreement"] = np.where(
+        data["tender/nature"] == "Raamovereenkomst",
+        True,  # noqa: FBT003
+        None,
+    )
     data["tender/techniques/hasDynamicPurchasingSystem"] = np.where(
         data["tender/nature"] == "Instellen van dynamisch aankoopsysteem (DAS)",
-        True,
+        True,  # noqa: FBT003
         None,
     )
     data["tender/bidOpening/description"] = np.where(
@@ -384,9 +388,7 @@ def transform_to_ocds(data):
 
     data["tag"] = data.apply(set_tag, axis=1)
 
-    data = data.drop(["row_number"], axis=1)
-
-    return data
+    return data.drop(["row_number"], axis=1)
 
 
 def convert_to_json(schema, year):
@@ -439,7 +441,7 @@ def package_releases(json_dir):
         outfile.write(json.dumps(packages))
 
 
-def initial_setup(generate_schema=False):
+def initial_setup(*, generate_schema=False):
     """
     Generate the final OCDS JSON schema to use, and create the paths to use
     :return:
@@ -463,7 +465,7 @@ def main():
     parser.add_argument("--year", type=int)
     parser.add_argument("--generate-schema", action="store_true")
     args = parser.parse_args()
-    initial_setup(args.generate_schema)
+    initial_setup(generate_schema=args.generate_schema)
     for year, data in read_by_years(selected_year=args.year):
         data = transform_to_ocds(data)
         save_csv(data, year)
