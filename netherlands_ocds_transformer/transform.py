@@ -335,12 +335,12 @@ def transform_to_ocds(data):
     # Values to boolean
     data["tender/techniques/hasFrameworkAgreement"] = np.where(
         data["tender/nature"] == "Raamovereenkomst",
-        True,  # noqa: FBT003
+        True,  # noqa: FBT003 # false positive
         None,
     )
     data["tender/techniques/hasDynamicPurchasingSystem"] = np.where(
         data["tender/nature"] == "Instellen van dynamisch aankoopsysteem (DAS)",
-        True,  # noqa: FBT003
+        True,  # noqa: FBT003 # false positive
         None,
     )
     data["tender/bidOpening/description"] = np.where(
