@@ -1,8 +1,8 @@
 import argparse
+import datetime
 import json
 import os
 import shutil
-from datetime import datetime
 from urllib.request import urlopen
 
 import json_merge_patch
@@ -93,32 +93,17 @@ def get_schema():
 
 
 def text_to_bool(value=None):
-    """
-    Converts yer or no to True or False
-    :param value:
-    :return:
-    """
+    """Convert yes or no to True or False."""
     return {"Ja": value if value else True, "Nee": None if value else False}
 
 
 def set_value_when_not_na(data, main_column, new_column, value):
-    """
-    Fill new_column with value when main_column is not null
-    :param data:
-    :param main_column:
-    :param new_column:
-    :param value:
-    :return:
-    """
+    """Fill new_column with value when main_column is not null."""
     data.loc[~data[main_column].isna(), new_column] = value
 
 
 def replace_boolean_fields(data):
-    """
-    Replace yes or no fields with their boolean format
-    :param data:
-    :return:
-    """
+    """Replace yes or no fields with their boolean format."""
     boolean_fields = [
         "tender/hasParticipationFees",
         "tender/isDigital",
@@ -132,11 +117,7 @@ def replace_boolean_fields(data):
 
 
 def year_month_to_days(row):
-    """
-    Transform strings with format "X months" or "Y years" into "Z" days
-    :param row:
-    :return:
-    """
+    """Transform strings with format "X months" or "Y years" into "Z" days."""
     if pd.isna(row):
         return None
     if "Maande" in row:
@@ -149,12 +130,11 @@ def year_month_to_days(row):
 
 def set_award_id(row):
     """
-    Set award id:
-     - if a supplier id exists, use the supplier id
-     - If a supplier id doesn't exist, use the supplier name
-     - If a lot id exists, concatenate to the supplier id
-    :param row:
-    :return:
+    Set award ID.
+
+    - if a supplier id exists, use the supplier id
+    - If a supplier id doesn't exist, use the supplier name
+    - If a lot id exists, concatenate to the supplier id
     """
     if not pd.isna(row["awards/suppliers/id"]) or not pd.isna(row["awards/suppliers/name"]):
         main_id = (
@@ -170,9 +150,7 @@ def set_award_id(row):
 
 def set_tag(row):
     """
-    Set an OCDS tag. If tender information exist, add tender as tag, if awards information exists, add awards as tags
-    :param row:
-    :return:
+    Set an OCDS tag. If tender information exist, add tender as tag, if awards information exists, add awards as tags.
     """
     tags = {"tender"}
     if not pd.isna(row["awards/suppliers/id"]):
@@ -181,10 +159,7 @@ def set_tag(row):
 
 
 def read_by_years(selected_year=None):
-    """
-    Read the file splitting it by years, using Publicatiedatum as the year column
-    :return:
-    """
+    """Read the file splitting it by years, using Publicatiedatum as the year column."""
     date_column = "Publicatiedatum"
     data = pd.read_excel(FILE_NAME, sheet_name=DATA_SHEET_NAME, dtype=str)
     years = pd.to_datetime(data[date_column], dayfirst=True).dt.year.unique()
@@ -198,11 +173,7 @@ def read_by_years(selected_year=None):
 
 
 def rename_columns(data):
-    """
-    Rename the columns from TenderNed to OCDS, according to the mapping in the mapping field
-    :param data:
-    :return:
-    """
+    """Rename the columns from TenderNed to OCDS, according to the mapping in the mapping field."""
     mapping_ocds = pd.read_csv("mapping_ocds.csv")
     mapping_ocds[TENDERNED_SOURCE_COLUMN] = mapping_ocds[TENDERNED_SOURCE_COLUMN].str.upper().str.strip()
     new_column_names = pd.Series(
@@ -260,11 +231,7 @@ def set_parties_metadata(data):
 
 
 def complete_bids_information(data):
-    """
-    Complete the metadata information required by OCDS, including bids id and measure name
-    :param data:
-    :return:
-    """
+    """Complete the metadata information required by OCDS, including bids id and measure name."""
     bid_path = "bids/statistics"
     for key, value in bids_details.items():
         position = int(value)
@@ -392,12 +359,7 @@ def transform_to_ocds(data):
 
 
 def convert_to_json(schema, year):
-    """
-    Convert a CSV file to OCDS JSON
-    :param schema:
-    :param year:
-    :return:
-    """
+    """Convert a CSV file to OCDS JSON."""
     json_dir = os.path.join(JSON_OUTPUT_DIR, f"{year}.json")
     unflatten(
         os.path.join(CSV_OUTPUT_DIR, year),
@@ -411,11 +373,7 @@ def convert_to_json(schema, year):
 
 
 def format_dates(data_frame):
-    """
-    Format all the date columns as OCDS dates.
-    :param data_frame:
-    :return:
-    """
+    """Format all the date columns as OCDS dates."""
     for column in data_frame.columns:
         if "date" in column.lower():
             data_frame[column] = pd.to_datetime(data_frame[column], dayfirst=True, format="%d-%m-%Y", errors="coerce")
@@ -423,11 +381,7 @@ def format_dates(data_frame):
 
 
 def package_releases(json_dir):
-    """
-    Package a list of releases into a release package
-    :param json_dir:
-    :return:
-    """
+    """Package a list of releases into a release package."""
     with open(json_dir) as f:
         data = json.load(f)
     packages = ocdskit.combine.package_releases(
@@ -435,17 +389,14 @@ def package_releases(json_dir):
         uri=OCDS_DATA_SET_URI,
         publisher={"name": PUBLISHER_NAME},
         extensions=EXTENSIONS,
-        published_date=datetime.now().strftime("%Y-%m-%dT00:00:00Z"),
+        published_date=datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT00:00:00Z"),
     )
     with open(json_dir, "w") as outfile:
         outfile.write(json.dumps(packages))
 
 
 def initial_setup(*, generate_schema=False):
-    """
-    Generate the final OCDS JSON schema to use, and create the paths to use
-    :return:
-    """
+    """Generate the final OCDS JSON schema to use, and create the paths to use."""
     if generate_schema:
         get_schema()
     for path in [JSON_OUTPUT_DIR, CSV_OUTPUT_DIR]:
@@ -467,8 +418,7 @@ def main():
     args = parser.parse_args()
     initial_setup(generate_schema=args.generate_schema)
     for year, data in read_by_years(selected_year=args.year):
-        data = transform_to_ocds(data)
-        save_csv(data, year)
+        save_csv(transform_to_ocds(data), year)
         json_dir = convert_to_json("schema.json", year)
         package_releases(json_dir)
     shutil.rmtree(CSV_OUTPUT_DIR)
