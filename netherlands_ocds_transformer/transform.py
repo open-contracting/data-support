@@ -28,20 +28,16 @@ PUBLISHER_NAME = "Ministry of Economic Affairs and Climate Policy"
 EXTENSIONS = [
     "https://raw.githubusercontent.com/open-contracting-extensions/ocds_coveredBy_extension/master/extension.json",
     "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bidOpening_extension/master/extension.json",
-    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_tenderClassification_extension/master"
-    "/extension.json",
+    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_tenderClassification_extension/master/extension.json",
     "https://raw.githubusercontent.com/open-contracting-extensions/ocds_legalBasis_extension/1.1/extension.json",
-    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_otherRequirements_extension/master/extension"
-    ".json",
+    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_otherRequirements_extension/master/extension.json",
     "https://raw.githubusercontent.com/open-contracting-extensions/ocds_techniques_extension/master/extension.json",
     "https://raw.githubusercontent.com/open-contracting-extensions/ocds_bid_extension/master/extension.json",
-    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension"
-    ".json",
+    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_partyDetails_scale_extension/master/extension.json",
     "https://raw.githubusercontent.com/open-contracting-extensions/ocds_lots_extension/master/extension.json",
     "https://bitbucket.org/ONCAETI/ocds_releasesource_extension/raw/master/extension.json",
     "https://raw.githubusercontent.com/open-contracting-extensions/eforms/latest/schema/profile/extension.json",
-    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/1.1"
-    "/extension.json",
+    "https://raw.githubusercontent.com/open-contracting-extensions/ocds_organizationClassification_extension/1.1/extension.json",
 ]
 
 # OCDS codes mapping
