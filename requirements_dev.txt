@@ -127,13 +127,6 @@ schema==0.7.5
     # via
     #   -r requirements.txt
     #   flattentool
-setuptools==74.1.1
-    # via
-    #   -r requirements.txt
-    #   zc-lockfile
-    #   zc-zlibstorage
-    #   zodbpickle
-    #   zope-interface
 six==1.16.0
     # via
     #   -r requirements.txt
