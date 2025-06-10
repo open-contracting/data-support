@@ -113,7 +113,7 @@ pytz==2023.3.post1
     #   -r requirements.txt
     #   flattentool
     #   pandas
-requests==2.32.3
+requests==2.32.4
     # via
     #   -r requirements.txt
     #   ocdsextensionregistry
