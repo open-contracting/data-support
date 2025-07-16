@@ -16,6 +16,8 @@ cffi==1.16.0
     # via persistent
 charset-normalizer==3.3.0
     # via requests
+click==8.2.1
+    # via -r requirements.in
 contextlib2==21.6.0
     # via schema
 defusedxml==0.7.1

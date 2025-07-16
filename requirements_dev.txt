@@ -29,6 +29,8 @@ charset-normalizer==3.3.0
     # via
     #   -r requirements.txt
     #   requests
+click==8.2.1
+    # via -r requirements.txt
 contextlib2==21.6.0
     # via
     #   -r requirements.txt
