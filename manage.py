@@ -24,7 +24,8 @@ def cli():
     help="The directory containing PO files, like docs/locale",
 )
 @click.option("--project-id", type=int, help="The Crowdin project ID")
-def update_crowdinyml_files(pot_dir, locale_dir, project_id):
+@click.option("--ignore", multiple=True, help="Substrings of path to ignore")
+def update_crowdinyml_files(pot_dir, locale_dir, project_id, ignore):
     """
     Update the files in crowdin.yml.
 
@@ -60,6 +61,7 @@ def update_crowdinyml_files(pot_dir, locale_dir, project_id):
                 "translation": f"/{infix}/%two_letters_code%/LC_MESSAGES/{str(pot.relative_to(pot_dir))[:-1]}",
             }
             for pot in sorted(pot_dir.glob("**/*.pot"))
+            if not any(pattern in str(pot) for pattern in ignore)
         ]
 
     with configfile.open("w") as f:
