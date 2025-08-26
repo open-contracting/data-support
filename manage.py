@@ -11,7 +11,20 @@ def cli():
 
 
 @cli.command()
-def update_crowdinyml_files():
+@click.option(
+    "-p",
+    "--pot-dir",
+    type=click.Path(exists=True, file_okay=False, resolve_path=True, path_type=Path),
+    help="The directory containing POT files, like docs/_build/gettext",
+)
+@click.option(
+    "-d",
+    "--locale-dir",
+    type=click.Path(exists=True, file_okay=False, resolve_path=True, path_type=Path),
+    help="The directory containing PO files, like docs/locale",
+)
+@click.option("--project-id", type=int, help="The Crowdin project ID")
+def update_crowdinyml_files(pot_dir, locale_dir, project_id):
     """
     Update the files in crowdin.yml.
 
@@ -19,25 +32,35 @@ def update_crowdinyml_files():
     """
     cwd = Path.cwd()
 
+    config = {}
+
     configfile = cwd / "crowdin.yml"
-    if not configfile.exists():
-        raise click.ClickException(f"crowdin.yml not found in {cwd}")
+    if configfile.exists():
+        with configfile.open() as f:
+            text = f.read()
+            if text:
+                try:
+                    config = json.loads(text)
+                except json.JSONDecodeError:
+                    click.secho(f"{configfile} might be YAML, overwriting", fg="red", err=True)
 
-    with configfile.open() as f:
-        config = json.load(f)
+    if project_id:
+        config["project_id"] = project_id
+    config["preserve_hierarchy"] = True
 
-    builddir = cwd / "docs" / "_build" / "gettext"
-    if not builddir.exists():
-        raise click.ClickException(f".pot files not found in {builddir}. Run: make gettext")
+    if pot_dir and locale_dir:
+        if not pot_dir.exists():
+            raise click.ClickException(f".pot files not found in {pot_dir}. For Sphinx, run: make gettext")
 
-    config["files"] = [
-        {
-            "source": f"/{pot.relative_to(cwd)}",
-            "dest": f"{pot.relative_to(builddir)}",
-            "translation": f"/docs/locale/%two_letters_code%/LC_MESSAGES/{str(pot.relative_to(builddir))[:-1]}",
-        }
-        for pot in sorted(builddir.glob("**/*.pot"))
-    ]
+        infix = locale_dir.relative_to(cwd)
+        config["files"] = [
+            {
+                "source": f"/{pot.relative_to(cwd)}",
+                "dest": f"{pot.relative_to(pot_dir)}",
+                "translation": f"/{infix}/%two_letters_code%/LC_MESSAGES/{str(pot.relative_to(pot_dir))[:-1]}",
+            }
+            for pot in sorted(pot_dir.glob("**/*.pot"))
+        ]
 
     with configfile.open("w") as f:
         json.dump(config, f, indent=2)
