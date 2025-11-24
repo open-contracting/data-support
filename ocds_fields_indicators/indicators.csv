@@ -1,0 +1,308 @@
+indicator,usecase,fields
+Total number of procedures,Market Opportunity,ocid
+Total number of procuring entities,Market Opportunity,ocid
+Total number of procuring entities,Market Opportunity,tender/procuringEntity/name
+Total number of procuring entities,Market Opportunity,buyer/name
+Total number of procuring entities,Market Opportunity,parties/identifier/id
+Total number of procuring entities,Market Opportunity,parties/identifier/name
+Total number of procuring entities,Market Opportunity,parties/roles
+Total number of unique bidders,Market Opportunity,ocid
+Total number of unique bidders,Market Opportunity,tender/tenderers/id
+Total number of unique bidders,Market Opportunity,bids/details/tenderers/id
+Total number of awarded suppliers,Market Opportunity,awards/id
+Total number of awarded suppliers,Market Opportunity,awards/suppliers/id
+Total number of awarded suppliers,Market Opportunity,awards/suppliers/name
+Total number of awarded suppliers,Market Opportunity,awards/status
+Total number of procedures by year or month,Market Opportunity,ocid
+Total number of procedures by year or month,Market Opportunity,date
+Total value awarded,Market Opportunity,ocid
+Total value awarded,Market Opportunity,awards/status
+Total value awarded,Market Opportunity,awards/value/amount
+Total value awarded,Market Opportunity,awards/value/currency
+Share of procedures by status,Market Opportunity,ocid
+Share of procedures by status,Market Opportunity,tender/status
+Number of procedures by item type,Market Opportunity,ocid
+Number of procedures by item type,Market Opportunity,tender/items/classification/id
+Number of procedures by item type,Market Opportunity,tender/items/classification/scheme
+Proportion of procedures by procurement category,Market Opportunity,tender/mainProcurementCategory
+Percent of tenders by procedure type,Market Opportunity,ocid
+Percent of tenders by procedure type,Market Opportunity,tender/procurementMethod
+Percent of tenders awarded by means of competitive procedures,Market Opportunity,ocid
+Percent of tenders awarded by means of competitive procedures,Market Opportunity,tender/procurementMethod
+Percent of tenders awarded by means of competitive procedures,Market Opportunity,awards/status
+Percent of contracts awarded under each procedure type,Market Opportunity,ocid
+Percent of contracts awarded under each procedure type,Market Opportunity,tender/procurementMethod
+Percent of contracts awarded under each procedure type,Market Opportunity,contracts/id
+Percent of contracts awarded under each procedure type,Market Opportunity,contracts/status
+Total contracted value awarded under each procedure type,Market Opportunity,ocid
+Total contracted value awarded under each procedure type,Market Opportunity,tender/procurementMethod
+Total contracted value awarded under each procedure type,Market Opportunity,contracts/id
+Total contracted value awarded under each procedure type,Market Opportunity,contracts/status
+Total contracted value awarded under each procedure type,Market Opportunity,contracts/value/amount
+Total contracted value awarded under each procedure type,Market Opportunity,contracts/value/currency
+Total awarded value of tenders awarded by means of competitive procedures,Market Opportunity,ocid
+Total awarded value of tenders awarded by means of competitive procedures,Market Opportunity,tender/procurementMethod
+Total awarded value of tenders awarded by means of competitive procedures,Market Opportunity,awards/status
+Total awarded value of tenders awarded by means of competitive procedures,Market Opportunity,awards/value/amount
+Total awarded value of tenders awarded by means of competitive procedures,Market Opportunity,awards/value/currency
+Proportion of single bid tenders,Market Opportunity,ocid
+Proportion of single bid tenders,Market Opportunity,tender/procurementMethod
+Proportion of single bid tenders,Market Opportunity,tender/numberOfTenderers
+Proportion of single bid tenders,Market Opportunity,tender/tenderers/id
+Proportion of value awarded in single bid tenders vs competitive tenders,Market Opportunity,ocid
+Proportion of value awarded in single bid tenders vs competitive tenders,Market Opportunity,tender/procurementMethod
+Proportion of value awarded in single bid tenders vs competitive tenders,Market Opportunity,awards/status
+Proportion of value awarded in single bid tenders vs competitive tenders,Market Opportunity,awards/value/amount
+Proportion of value awarded in single bid tenders vs competitive tenders,Market Opportunity,awards/value/currency
+Proportion of value awarded in single bid tenders vs competitive tenders,Market Opportunity,tender/numberOfTenderers
+Proportion of value awarded in single bid tenders vs competitive tenders,Market Opportunity,tender/tenderers/id
+Mean number of bidders per tender,Market Opportunity,ocid
+Mean number of bidders per tender,Market Opportunity,tender/procurementMethod
+Mean number of bidders per tender,Market Opportunity,tender/numberOfTenderers
+Mean number of bidders per tender,Market Opportunity,tender/tenderers/id
+Median number of bidders per tender,Market Opportunity,ocid
+Median number of bidders per tender,Market Opportunity,tender/procurementMethod
+Median number of bidders per tender,Market Opportunity,tender/numberOfTenderers
+Median number of bidders per tender,Market Opportunity,tender/tenderers/id
+Mean number of bidders by item type,Market Opportunity,ocid
+Mean number of bidders by item type,Market Opportunity,tender/procurementMethod
+Mean number of bidders by item type,Market Opportunity,tender/items/classification/id
+Mean number of bidders by item type,Market Opportunity,tender/items/classification/scheme
+Mean number of bidders by item type,Market Opportunity,tender/numberOfTenderers
+Mean number of bidders by item type,Market Opportunity,tender/tenderers/id
+Number of suppliers by item type,Market Opportunity,awards/id
+Number of suppliers by item type,Market Opportunity,awards/suppliers/id
+Number of suppliers by item type,Market Opportunity,awards/suppliers/name
+Number of suppliers by item type,Market Opportunity,awards/items/classification/id
+Number of suppliers by item type,Market Opportunity,awards/items/classification/scheme
+Number of new bidders in a system,Market Opportunity,tender/id
+Number of new bidders in a system,Market Opportunity,tender/tenderers/id
+Number of new bidders in a system,Market Opportunity,tender/tenderPeriod/startDate
+Percent of new bidders to all bidders,Market Opportunity,tender/id
+Percent of new bidders to all bidders,Market Opportunity,tender/tenderers/id
+Percent of new bidders to all bidders,Market Opportunity,tender/tenderPeriod/startDate
+Percent of tenders with at least three participants deemed qualified,Market Opportunity,ocid
+Percent of tenders with at least three participants deemed qualified,Market Opportunity,bids/details/tenderers/id
+Percent of tenders with at least three participants deemed qualified,Market Opportunity,bids/details/id
+Percent of tenders with at least three participants deemed qualified,Market Opportunity,bids/details/status
+Mean percent of bids which are disqualified,Market Opportunity,tender/id
+Mean percent of bids which are disqualified,Market Opportunity,bids/details/id
+Mean percent of bids which are disqualified,Market Opportunity,bids/details/status
+Percent of contracts awarded to top 10 suppliers with largest contracted totals,Market Opportunity,awards/id
+Percent of contracts awarded to top 10 suppliers with largest contracted totals,Market Opportunity,awards/suppliers/id
+Percent of contracts awarded to top 10 suppliers with largest contracted totals,Market Opportunity,awards/suppliers/name
+Percent of contracts awarded to top 10 suppliers with largest contracted totals,Market Opportunity,contracts/id
+Percent of contracts awarded to top 10 suppliers with largest contracted totals,Market Opportunity,contracts/awardID
+Percent of contracts awarded to top 10 suppliers with largest contracted totals,Market Opportunity,contracts/value/amount
+Percent of contracts awarded to top 10 suppliers with largest contracted totals,Market Opportunity,contracts/value/currency
+Mean number of unique suppliers per buyer,Market Opportunity,ocid
+Mean number of unique suppliers per buyer,Market Opportunity,awards/suppliers/id
+Mean number of unique suppliers per buyer,Market Opportunity,awards/suppliers/name
+Mean number of unique suppliers per buyer,Market Opportunity,tender/procuringEntity/name
+Mean number of unique suppliers per buyer,Market Opportunity,buyer/name
+Mean number of unique suppliers per buyer,Market Opportunity,parties/identifier/id
+Mean number of unique suppliers per buyer,Market Opportunity,parties/roles
+Number of new awarded suppliers,Market Opportunity,awards/id
+Number of new awarded suppliers,Market Opportunity,awards/suppliers/id
+Number of new awarded suppliers,Market Opportunity,awards/suppliers/name
+Number of new awarded suppliers,Market Opportunity,awards/date
+Percent of awards awarded to new suppliers,Market Opportunity,awards/id
+Percent of awards awarded to new suppliers,Market Opportunity,awards/suppliers/id
+Percent of awards awarded to new suppliers,Market Opportunity,awards/suppliers/name
+Percent of awards awarded to new suppliers,Market Opportunity,awards/date
+Total awarded value awarded to new suppliers,Market Opportunity,awards/id
+Total awarded value awarded to new suppliers,Market Opportunity,awards/suppliers/id
+Total awarded value awarded to new suppliers,Market Opportunity,awards/suppliers/name
+Total awarded value awarded to new suppliers,Market Opportunity,awards/date
+Total awarded value awarded to new suppliers,Market Opportunity,awards/value/amount
+Total awarded value awarded to new suppliers,Market Opportunity,awards/value/currency
+Percent of new suppliers to all suppliers,Market Opportunity,awards/id
+Percent of new suppliers to all suppliers,Market Opportunity,awards/suppliers/id
+Percent of new suppliers to all suppliers,Market Opportunity,awards/suppliers/name
+Percent of new suppliers to all suppliers,Market Opportunity,awards/date
+Percent of growth of new awarded suppliers in a system,Market Opportunity,awards/id
+Percent of growth of new awarded suppliers in a system,Market Opportunity,awards/suppliers/id
+Percent of growth of new awarded suppliers in a system,Market Opportunity,awards/suppliers/name
+Percent of growth of new awarded suppliers in a system,Market Opportunity,awards/date
+Percent of total awarded value awarded to recurring suppliers,Market Opportunity,awards/id
+Percent of total awarded value awarded to recurring suppliers,Market Opportunity,awards/suppliers/id
+Percent of total awarded value awarded to recurring suppliers,Market Opportunity,awards/suppliers/name
+Percent of total awarded value awarded to recurring suppliers,Market Opportunity,awards/date
+Percent of total awarded value awarded to recurring suppliers,Market Opportunity,awards/value/amount
+Percent of total awarded value awarded to recurring suppliers,Market Opportunity,awards/value/currency
+Mean number of bids necessary to win,Market Opportunity,ocid
+Mean number of bids necessary to win,Market Opportunity,tender/tenderers/id
+Mean number of bids necessary to win,Market Opportunity,awards/suppliers/id
+Mean number of bids necessary to win,Market Opportunity,awards/suppliers/name
+"Market concentration, market share of the largest company in the market",Market Opportunity,awards/suppliers/id
+"Market concentration, market share of the largest company in the market",Market Opportunity,awards/suppliers/name
+"Market concentration, market share of the largest company in the market",Market Opportunity,awards/value/amount
+"Market concentration, market share of the largest company in the market",Market Opportunity,awards/value/currency
+"Market concentration, market share of the largest company in the market",Market Opportunity,awards/items/classification/id
+"Market concentration, market share of the largest company in the market",Market Opportunity,awards/items/classification/scheme
+Proportion of contracts awarded by supplier by non competitive procedures,Market Opportunity,ocid
+Proportion of contracts awarded by supplier by non competitive procedures,Market Opportunity,tender/procurementMethod
+Proportion of contracts awarded by supplier by non competitive procedures,Market Opportunity,awards/status
+Proportion of contracts awarded by supplier by non competitive procedures,Market Opportunity,awards/suppliers/id
+Proportion of contracts awarded by supplier by non competitive procedures,Market Opportunity,awards/suppliers/name
+Region of the supplier,Market Opportunity,parties/roles
+Region of the supplier,Market Opportunity,parties/identifier/id
+Region of the supplier,Market Opportunity,parties/address/region
+Region of the supplier,Market Opportunity,parties/address/addressDetails/region
+Number of bids submitted by supplier,Market Opportunity,awards/suppliers/id
+Number of bids submitted by supplier,Market Opportunity,tender/tenderers/id
+Number of bids submitted by supplier,Market Opportunity,bids/details/tenderers/id
+Success rate of bidders,Market Opportunity,ocid
+Success rate of bidders,Market Opportunity,tender/tenderers/id
+Success rate of bidders,Market Opportunity,awards/suppliers/id
+Success rate of bidders,Market Opportunity,awards/suppliers/name
+Number of unique items classifications awarded by supplier,Market Opportunity,awards/id
+Number of unique items classifications awarded by supplier,Market Opportunity,awards/suppliers/id
+Number of unique items classifications awarded by supplier,Market Opportunity,awards/suppliers/name
+Number of unique items classifications awarded by supplier,Market Opportunity,awards/items/classification/id
+Number of unique items classifications awarded by supplier,Market Opportunity,awards/items/classification/scheme
+Total value awarded by supplier,Market Opportunity,awards/id
+Total value awarded by supplier,Market Opportunity,awards/suppliers/id
+Total value awarded by supplier,Market Opportunity,awards/suppliers/name
+Total value awarded by supplier,Market Opportunity,awards/status
+Total value awarded by supplier,Market Opportunity,contracts/id
+Total value awarded by supplier,Market Opportunity,contracts/awardID
+Total value awarded by supplier,Market Opportunity,contracts/value/amount
+Total value awarded by supplier,Market Opportunity,contracts/value/currency
+Share of total value awarded by supplier,Market Opportunity,awards/id
+Share of total value awarded by supplier,Market Opportunity,awards/suppliers/id
+Share of total value awarded by supplier,Market Opportunity,awards/suppliers/name
+Share of total value awarded by supplier,Market Opportunity,awards/status
+Share of total value awarded by supplier,Market Opportunity,contracts/id
+Share of total value awarded by supplier,Market Opportunity,contracts/awardID
+Share of total value awarded by supplier,Market Opportunity,contracts/value/amount
+Share of total value awarded by supplier,Market Opportunity,contracts/value/currency
+Total number of contracts awarded by supplier,Market Opportunity,awards/id
+Total number of contracts awarded by supplier,Market Opportunity,awards/suppliers/id
+Total number of contracts awarded by supplier,Market Opportunity,awards/suppliers/name
+Total number of contracts awarded by supplier,Market Opportunity,contracts/status
+Total number of contracts awarded by supplier,Market Opportunity,contracts/id
+Total number of contracts awarded by supplier,Market Opportunity,contracts/awardID
+Number of procuring entities by supplier,Market Opportunity,ocid
+Number of procuring entities by supplier,Market Opportunity,awards/suppliers/id
+Number of procuring entities by supplier,Market Opportunity,awards/suppliers/name
+Number of procuring entities by supplier,Market Opportunity,tender/procuringEntity/name
+Number of procuring entities by supplier,Market Opportunity,buyer/name
+Number of procuring entities by supplier,Market Opportunity,parties/identifier/id
+Number of procuring entities by supplier,Market Opportunity,parties/roles
+Share of single bid awards by supplier,Market Opportunity,ocid
+Share of single bid awards by supplier,Market Opportunity,awards/suppliers/id
+Share of single bid awards by supplier,Market Opportunity,awards/suppliers/name
+Share of single bid awards by supplier,Market Opportunity,awards/status
+Share of single bid awards by supplier,Market Opportunity,tender/procurementMethod
+Share of single bid awards by supplier,Market Opportunity,tender/numberOfTenderers
+Share of single bid awards by supplier,Market Opportunity,tender/tenderers/id
+Percent of tenders with linked procurement plans,Public Integrity,tender/id
+Percent of tenders with linked procurement plans,Public Integrity,tender/documents/documentType
+Percent of contracts which publish information on debarments,Public Integrity,contracts/id
+Percent of contracts which publish information on debarments,Public Integrity,contracts/implementation/documents/documentType
+The percent of tenders for which the tender documentation was added after publication of the announcement,Public Integrity,tender/id
+The percent of tenders for which the tender documentation was added after publication of the announcement,Public Integrity,tender/documents/documentType
+The percent of tenders for which the tender documentation was added after publication of the announcement,Public Integrity,tender/documents/documentType
+The percent of tenders for which the tender documentation was added after publication of the announcement,Public Integrity,tender/documents/datePublished
+Mean number of contract amendments per buyer,Public Integrity,ocid
+Mean number of contract amendments per buyer,Public Integrity,contracts/id
+Mean number of contract amendments per buyer,Public Integrity,contracts/amendments
+Mean number of contract amendments per buyer,Public Integrity,tender/procuringEntity/name
+Mean number of contract amendments per buyer,Public Integrity,buyer/name
+Mean number of contract amendments per buyer,Public Integrity,parties/identifier/id
+Mean number of contract amendments per buyer,Public Integrity,parties/roles
+"Percent of tenders which have been closed for more than 30 days, but whose basic awards information is not published",Public Integrity,tender/id
+"Percent of tenders which have been closed for more than 30 days, but whose basic awards information is not published",Public Integrity,tender/tenderPeriod/endDate
+"Percent of tenders which have been closed for more than 30 days, but whose basic awards information is not published",Public Integrity,awards/id
+"Percent of tenders which have been closed for more than 30 days, but whose basic awards information is not published",Public Integrity,awards/date
+"Percent of tenders which have been closed for more than 30 days, but whose basic awards information is not published",Public Integrity,awards/status
+"Percent of tenders which have been closed for more than 30 days, but whose basic awards information is not published",Public Integrity,awards/value/amount
+"Percent of tenders which have been closed for more than 30 days, but whose basic awards information is not published",Public Integrity,awards/suppliers/id
+"Percent of tenders which have been closed for more than 30 days, but whose basic awards information is not published",Public Integrity,awards/suppliers/name
+"Percent of awards which are older than 30 days, but whose contract is not published",Public Integrity,awards/id
+"Percent of awards which are older than 30 days, but whose contract is not published",Public Integrity,awards/date
+"Percent of awards which are older than 30 days, but whose contract is not published",Public Integrity,contracts/awardID
+"Percent of awards which are older than 30 days, but whose contract is not published",Public Integrity,contracts/status
+"Percent of awards which are older than 30 days, but whose contract is not published",Public Integrity,contracts/dateSigned
+"Percent of awards which are older than 30 days, but whose contract is not published",Public Integrity,contracts/documents/documentType
+Percent of tenders that do not specify place of delivery,Public Integrity,ocid
+Percent of tenders that do not specify place of delivery,Public Integrity,tender/items/deliveryLocation
+Percent of tenders that do not specify place of delivery,Public Integrity,tender/items/deliveryAddress
+Percent of tenders that do not specify date of delivery,Public Integrity,tender/milestones/id
+Percent of tenders that do not specify date of delivery,Public Integrity,tender/milestones/type
+Percent of tenders that do not specify date of delivery,Public Integrity,tender/milestones/description
+Percent of tenders that do not specify date of delivery,Public Integrity,tender/milestones/dueDate
+Percent of tenders with short titles for example fewer than 10 characters in the title,Public Integrity,tender/id
+Percent of tenders with short titles for example fewer than 10 characters in the title,Public Integrity,tender/title
+Percent of tenders with short descriptions for instance fewer than 30 characters in the description,Public Integrity,tender/id
+Percent of tenders with short descriptions for instance fewer than 30 characters in the description,Public Integrity,tender/description
+Percent of tenders that do not include detailed item codes or item descriptions,Public Integrity,tender/id
+Percent of tenders that do not include detailed item codes or item descriptions,Public Integrity,tender/items/classification/id
+Percent of tenders that do not include detailed item codes or item descriptions,Public Integrity,tender/items/classification/scheme
+Percent of contracts that do not have amendments,Public Integrity,contracts/id
+Percent of contracts that do not have amendments,Public Integrity,contracts/amendments
+Percent of contracts which publish contract implementation details financial,Service Delivery,contracts/implementation/transactions/id
+Percent of contracts which publish contract implementation details financial,Service Delivery,contracts/implementation/transactions/value/amount
+Percent of contracts which publish contract implementation details financial,Service Delivery,contracts/implementation/transactions/value/currency
+Percent of contracts which publish contract implementation details physical,Service Delivery,contracts/implementation/milestones/type
+Percent of contracts which publish contract implementation details physical,Service Delivery,contracts/implementation/milestones/id
+Percent of contracts which publish contract implementation details physical,Service Delivery,contracts/implementation/milestones/dueDate
+Percent of contracts which publish contract implementation details physical,Service Delivery,contracts/implementation/milestones/status
+Average duration of tendering period days,Internal Efficiency,ocid
+Average duration of tendering period days,Internal Efficiency,tender/tenderPeriod/startDate
+Average duration of tendering period days,Internal Efficiency,tender/tenderPeriod/endDate
+Average duration of decision period days,Internal Efficiency,ocid
+Average duration of decision period days,Internal Efficiency,tender/tenderPeriod/endDate
+Average duration of decision period days,Internal Efficiency,awards/date
+Average days from award date to start of implementation,Internal Efficiency,awards/id
+Average days from award date to start of implementation,Internal Efficiency,awards/date
+Average days from award date to start of implementation,Internal Efficiency,awards/contractPeriod/startDate
+Average days from award date to start of implementation,Internal Efficiency,contracts/period/startDate
+Days between award date and tender start date,Internal Efficiency,ocid
+Days between award date and tender start date,Internal Efficiency,tender/tenderPeriod/startDate
+Days between award date and tender start date,Internal Efficiency,awards/date
+Percent of canceled tenders to awarded tenders,Internal Efficiency,ocid
+Percent of canceled tenders to awarded tenders,Internal Efficiency,tender/status
+Percent of canceled tenders to awarded tenders,Internal Efficiency,awards/status
+Percent of contracts which are canceled,Internal Efficiency,contracts/id
+Percent of contracts which are canceled,Internal Efficiency,contracts/status
+Price variation of same item across all awards,Value for Money,awards/id
+Price variation of same item across all awards,Value for Money,awards/value/amount
+Price variation of same item across all awards,Value for Money,awards/value/currency
+Price variation of same item across all awards,Value for Money,awards/items/classification/id
+Price variation of same item across all awards,Value for Money,awards/items/classification/scheme
+Price variation of same item across all awards,Value for Money,awards/items/quantity
+Price variation of same item across all awards,Value for Money,awards/items/unit
+Percent of contracts that exceed budget,Value for Money,ocid
+Percent of contracts that exceed budget,Value for Money,contracts/status
+Percent of contracts that exceed budget,Value for Money,contracts/value/amount
+Percent of contracts that exceed budget,Value for Money,contracts/value/currency
+Percent of contracts that exceed budget,Value for Money,planning/budget/amount/amount
+Percent of contracts that exceed budget,Value for Money,tender/value/amount
+Percent of contracts that exceed budget,Value for Money,planning/budget/amount/currency
+Percent of contracts that exceed budget,Value for Money,tender/value/currency
+Mean percent overrun of contracts that exceed budget,Value for Money,ocid
+Mean percent overrun of contracts that exceed budget,Value for Money,contracts/status
+Mean percent overrun of contracts that exceed budget,Value for Money,contracts/value/amount
+Mean percent overrun of contracts that exceed budget,Value for Money,contracts/value/currency
+Mean percent overrun of contracts that exceed budget,Value for Money,planning/budget/amount/amount
+Mean percent overrun of contracts that exceed budget,Value for Money,tender/value/amount
+Mean percent overrun of contracts that exceed budget,Value for Money,planning/budget/amount/currency
+Mean percent overrun of contracts that exceed budget,Value for Money,tender/value/currency
+Total percent savings difference between budget and contract value,Value for Money,ocid
+Total percent savings difference between budget and contract value,Value for Money,planning/budget/amount/amount
+Total percent savings difference between budget and contract value,Value for Money,planning/budget/amount/currency
+Total percent savings difference between budget and contract value,Value for Money,contracts/value/amount
+Total percent savings difference between budget and contract value,Value for Money,contracts/value/currency
+Total percent savings difference between tender value estimate and contract value,Value for Money,ocid
+Total percent savings difference between tender value estimate and contract value,Value for Money,tender/value/amount
+Total percent savings difference between tender value estimate and contract value,Value for Money,tender/value/currency
+Total percent savings difference between tender value estimate and contract value,Value for Money,contracts/value/amount
+Total percent savings difference between tender value estimate and contract value,Value for Money,contracts/value/currency
+Percent of contracts completed on time,Value for Money,contracts/id
+Percent of contracts completed on time,Value for Money,contracts/period/endDate
+Percent of contracts completed on time,Value for Money,contracts/status
+Share of contracts whose milestones are completed on time,Value for Money,contracts/id
+Share of contracts whose milestones are completed on time,Value for Money,contracts/implementation/milestones/dueDate
+Share of contracts whose milestones are completed on time,Value for Money,contracts/implementation/milestones/dateMet

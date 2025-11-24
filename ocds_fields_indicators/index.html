@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Interactive visualization of Open Contracting (OCDS) fields and the indicators that depend on them. Explore which indicators become computable as you select fields.">
+  <meta name="keywords"
+    content="OCDS, open contracting, procurement, indicators, data quality, fields, dependency visualization">
+  <meta name="author" content="Open Contracting Data Exploration">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#1f2933">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 120'%3E%3Crect width='120' height='120' rx='16' fill='%231f2933'/%3E%3Cpath d='M28 90V30h18l14 24 14-24h18v60H90V46L74 72H62L46 46v44H28Z' fill='%23fff'/%3E%3C/svg%3E">
+  <!-- Canonical URL: replace with deployed URL -->
+  <link rel="canonical" href="https://example.com/ocds-fields-indicators">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="OCDS Field ↔ Indicator Dependencies">
+  <meta property="og:description"
+    content="Select OCDS fields to see which indicators you can calculate and how each field increases analytical value.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://example.com/ocds-fields-indicators">
+  <meta property="og:image" content="https://example.com/og-image.png">
+  <meta property="og:image:alt" content="Screenshot of the OCDS field to indicator dependency explorer">
+
+  <!-- Structured Data (basic) -->
+  <script type="application/ld+json">{
+    "@context":"https://schema.org",
+    "@type":"SoftwareApplication",
+    "name":"OCDS Field–Indicator Dependency Explorer",
+    "applicationCategory":"DataVisualization",
+    "description":"Interactive visualization of Open Contracting (OCDS) fields and the indicators that depend on them.",
+    "operatingSystem":"Any",
+    "url":"https://example.com/ocds-fields-indicators"
+  }</script>
+  <title>Field-Indicator Dependency Demo</title>
+  <link rel="stylesheet" href="style.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500&family=Ubuntu+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+  <div id="container">
+    <div id="global-header" class="global-header">
+      <div class="gh-left">
+        <h2 class="gh-title" style="display:flex;align-items:center;gap:8px;">Fields
+          <button id="toggle-field-label-mode" class="icon-btn" aria-pressed="true"
+            aria-label="Switch to JSON path field names" title="Switch to JSON path field names">{}/Ab</button>
+        </h2>
+        <button id="reset-fields" class="icon-btn" aria-label="Reset selected fields"
+          title="Reset selected fields">↺</button>
+        <div id="fields-stats" class="gh-stats"></div>
+      </div>
+      <div class="gh-right">
+        <h2 class="gh-title" style="display:flex;align-items:center;gap:6px;">Indicators
+          <span class="usecase-help" tabindex="0" aria-label="Usecase icon legend">
+            🛈
+            <span class="tooltip" role="tooltip">
+              <strong>Usecase icons</strong><br>
+              💼 Market Opportunity<br>
+              🕵️ Public Integrity<br>
+              🚚 Service Delivery<br>
+              ⚙️ Internal Efficiency<br>
+              💰 Value for Money
+            </span>
+          </span>
+        </h2>
+        <div id="indicators-stats" class="gh-stats"></div>
+      </div>
+      <!-- Central mode toggle icon button -->
+      <button id="mode-toggle-central" class="mode-toggle-central" type="button"
+        aria-label="Switch to indicators → fields mode" title="Switch to indicators → fields mode"
+        data-mode="fields-to-indicators">⇄</button>
+    </div>
+    <div id="panels-wrapper" class="panels-wrapper">
+      <div id="fields-panel" class="panel-body">
+        <div class="field-columns-header" aria-hidden="false" role="presentation">
+          <button class="col-field sort-header" data-sort-key="field" type="button"
+            aria-label="Sort by field name">Field <span class="sort-indicator" data-key="field"></span></button>
+          <button class="col-count sort-header" data-sort-key="count" type="button"
+            aria-label="Sort by indicator count">Number of indicators relying on this field <span class="sort-indicator"
+              data-key="count"></span></button>
+        </div>
+        <div id="fields-list"></div>
+      </div>
+      <div id="indicators-panel" class="panel-body">
+        <div class="field-columns-header" aria-hidden="false" role="presentation">
+          <span class="col-field">Indicator</span>
+          <span class="col-count" title="Number of required fields">Fields available / Fields required</span>
+        </div>
+        <div id="indicators-list"></div>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="main.js"></script>
+</body>
+
+</html>
