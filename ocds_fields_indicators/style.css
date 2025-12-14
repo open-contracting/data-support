@@ -1,0 +1,597 @@
+.indicator-missing-fields-block {
+  display: block;
+  font-size: 10px;
+  color: #999;
+  margin: 4px 0 0 calc(22px + 8px);
+  /* align with indicator-name after icon */
+  font-style: italic;
+  word-break: break-word;
+}
+
+/* Mode toggle */
+.mode-toggle .mode-btn {
+  border: 1px solid #ccc;
+  background: #f6f6f6;
+  color: #333;
+  padding: 4px 10px;
+  font-size: 11px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 4px;
+  font-family: inherit;
+  transition: background .15s, color .15s, box-shadow .15s;
+}
+
+.mode-toggle .mode-btn:not(.active):hover {
+  background: #e8e8e8;
+}
+
+.mode-toggle .mode-btn.active {
+  background: #1f2933;
+  color: #fff;
+  box-shadow: 0 0 0 1px #1f2933;
+}
+
+.mode-toggle .mode-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #90caf9;
+}
+
+/* Central single mode toggle button */
+.mode-toggle-central {
+  position: absolute;
+  top: 6px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  z-index: 250;
+  /* above header content */
+  border: 1px solid #d0d0d0;
+  background: linear-gradient(#fafafa, #f0f0f0);
+  color: #1f2933;
+  padding: 6px 10px 7px;
+  font-size: 14px;
+  line-height: 1;
+  border-radius: 24px;
+  cursor: pointer;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+  transition: background .25s, box-shadow .25s, transform .35s cubic-bezier(.4, 1.6, .4, 1), color .25s;
+}
+
+.mode-toggle-central:hover {
+  background: linear-gradient(#fff, #f5f5f5);
+}
+
+.mode-toggle-central:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #90caf9;
+}
+
+.mode-toggle-central:active {
+  transform: translate(-50%, 1px);
+}
+
+.mode-toggle-central[data-mode="indicators-to-fields"] {
+  color: #fff;
+  background: linear-gradient(#1f2933, #111b21);
+  border-color: #1f2933;
+}
+
+.mode-toggle-central[data-mode="indicators-to-fields"]:hover {
+  background: linear-gradient(#263341, #182028);
+}
+
+.mode-toggle-central .mode-toggle-icon {
+  font-size: 16px;
+}
+
+.mode-toggle-central .mode-toggle-text {
+  font-size: 11px;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* Provide layout context for absolute centered toggle */
+.global-header {
+  position: sticky;
+}
+
+.indicator-main-row {
+  display: flex;
+  align-items: center;
+}
+
+.indicator-missing-fields-row {
+  display: none;
+}
+
+/* remove old variants; paragraph block handles styling */
+html,
+body {
+  background: #ffffff;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+/* Usecase icon legend tooltip */
+.usecase-help {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+  cursor: help;
+  border-radius: 4px;
+  background: #f0f0f0;
+  color: #444;
+  user-select: none;
+}
+
+/* Icon button (reset) */
+.icon-btn {
+  border: none;
+  background: #f0f0f0;
+  color: #444;
+  padding: 2px 8px 3px;
+  line-height: 1;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-family: inherit;
+  transition: background .15s, transform .15s;
+}
+
+.icon-btn:hover,
+.icon-btn:focus {
+  background: #e2e2e2;
+  outline: none;
+}
+
+.icon-btn:active {
+  transform: translateY(1px);
+}
+
+.icon-btn[aria-pressed="true"] {
+  background: #1f2933;
+  color: #fff;
+}
+
+.usecase-help:focus,
+.usecase-help:hover {
+  background: #e2e2e2;
+}
+
+.usecase-help .tooltip {
+  position: absolute;
+  top: 28px;
+  left: 0;
+  z-index: 120;
+  /* above .field-columns-header (80) and global header (50) */
+  background: #1f2933;
+  color: #fff;
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.3;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  min-width: 190px;
+  display: none;
+  pointer-events: none;
+}
+
+.usecase-help:hover .tooltip,
+.usecase-help:focus .tooltip {
+  display: block;
+}
+
+.usecase-help .tooltip strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.field-header-row {
+  display: flex;
+  align-items: center;
+  font-size: 0.85em;
+  color: #888;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+.field-header-name {
+  flex: 1;
+  margin-left: 32px;
+}
+
+.field-header-count {
+  min-width: 32px;
+  text-align: right;
+  border-left: 1px solid #eee;
+  padding-left: 8px;
+  margin-left: 8px;
+}
+
+.field-count-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-size: 0.85em;
+  color: #888;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+.field-count {
+  background: none;
+  font-size: 0.9em;
+  color: #555;
+  min-width: 32px;
+  text-align: right;
+  flex-shrink: 0;
+  border-left: 1px solid #eee;
+  padding-left: 8px;
+  margin-left: 8px;
+  position: static;
+  top: auto;
+  right: auto;
+  transform: none;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  font-family: 'Fira Mono', 'Ubuntu Mono', monospace;
+  overflow: hidden;
+}
+
+.global-header {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  /* raised above .field-columns-header (80) so tooltip appears on top */
+  display: flex;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 14px 24px 10px 24px;
+  background: #fff;
+  box-shadow: 0 4px 10px -6px rgba(0, 0, 0, 0.18);
+  border-bottom: 1px solid #eee;
+}
+
+.gh-left,
+.gh-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.gh-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.gh-stats {
+  font-size: 12px;
+  color: #555;
+  background: #f5f5f5;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.field-columns-header {
+  display: flex;
+  align-items: center;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #666;
+  padding: 10px 6px 10px 6px;
+  /* uniform padding */
+  border-bottom: 1px solid #e2e2e2;
+  margin-bottom: 6px;
+  /* tighter gap */
+  position: sticky;
+  top: 0;
+  /* inside scrollable panel body */
+  background: #fff;
+  z-index: 80;
+  /* above field items */
+  box-shadow: 0 2px 4px -2px rgba(0, 0, 0, 0.08);
+}
+
+.field-columns-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  /* ensure full opaque backdrop */
+  z-index: -1;
+}
+
+/* Ensure list content does not visually tuck underneath while scrolling */
+#fields-list {
+  scroll-margin-top: 44px;
+}
+
+/* Field items below the header */
+.field-item {
+  position: relative;
+}
+
+.field-columns-header .col-field {
+  flex: 1;
+  padding-left: 30px;
+}
+
+/* Ensure the clickable sort button for Field inherits same left padding */
+.field-columns-header .col-field.sort-header {
+  padding-left: 25px;
+}
+
+.field-columns-header .col-count {
+  min-width: 170px;
+  text-align: right;
+}
+
+/* Reverse mode header specific columns */
+.field-columns-header .col-indicator-rev {
+  flex: 1;
+  /* Checkbox (~16px) + checkbox margin (8px) + usecase icon width (22px) + icon margin-right (8px) = 54px.
+     Original field header uses 25px because only checkbox + small gap precede label. Here we need larger offset. */
+  padding-left: 65px;
+}
+
+.field-columns-header .reverse-required-field {
+  padding-left: 0 !important;
+  margin-left: 0;
+}
+
+.field-columns-header .sort-header {
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.field-columns-header .sort-header:focus {
+  outline: none;
+}
+
+.field-columns-header .sort-header:hover {
+  color: #222;
+}
+
+.sort-indicator {
+  width: 8px;
+  display: inline-block;
+}
+
+.sort-indicator::before {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  margin: 0 auto;
+}
+
+.sort-indicator.sort-asc::before {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 6px solid #444;
+}
+
+.sort-indicator.sort-desc::before {
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid #444;
+}
+
+.panels-wrapper {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+}
+
+#fields-panel,
+#indicators-panel {
+  position: relative;
+  overflow-y: auto;
+  padding: 20px 24px 40px 24px;
+  border-right: 1px solid #eee;
+}
+
+#indicators-panel {
+  border-right: none;
+}
+
+.field-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  width: 100%;
+  position: relative;
+  min-height: 32px;
+}
+
+.field-bar {
+  height: 28px;
+  background: #e0e0e0;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+  min-width: 0;
+  max-width: 100%;
+  position: relative;
+  overflow: visible;
+}
+
+.field-bar.checked {
+  background: #90caf9;
+}
+
+.field-bar-micro {
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25) inset;
+}
+
+.field-label {
+  margin-left: 8px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: visible;
+  text-overflow: initial;
+}
+
+.field-count {
+  background: none;
+  font-size: 0.9em;
+  color: #555;
+  min-width: 24px;
+  text-align: right;
+  flex-shrink: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.indicator-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.indicator-item {
+  display: block;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #f7f7f7;
+  font-size: 1em;
+  transition: background 0.7s cubic-bezier(.4, 2, .3, 1), color 0.7s cubic-bezier(.4, 2, .3, 1), transform 0.9s cubic-bezier(.4, 2, .3, 1);
+  margin-bottom: 2px;
+  position: relative;
+}
+
+/* Reverse mode: indicator selection list left side */
+.indicator-select-item {
+  margin: 0 0 4px 0;
+}
+
+.indicator-select-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: #f7f7f7;
+  cursor: pointer;
+  font-size: 1em;
+  /* match forward mode indicator font size */
+  position: relative;
+  transition: background .25s, box-shadow .25s, transform .25s;
+}
+
+.indicator-select-row:hover {
+  background: #ececec;
+}
+
+.indicator-select-row.is-selected {
+  background: #c8e6c9;
+  /* same as .indicator-possible */
+  box-shadow: 0 0 0 1px #81c784 inset;
+  transform: translateY(-2px);
+  /* subtle lift similar to forward mode emergence */
+}
+
+.indicator-select-row input[type="checkbox"] {
+  margin: 0 2px 0 0;
+}
+
+.indicator-select-row .indicator-name {
+  font-weight: 500;
+}
+
+.indicator-select-row.is-selected .indicator-name {
+  font-weight: 600;
+}
+
+
+.indicator-head-row {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.indicator-possible {
+  background: #c8e6c9;
+  color: #222;
+  font-weight: 500;
+  transform: translateY(-8px) scale(1.03);
+  z-index: 1;
+}
+
+.indicator-disabled {
+  color: #777;
+  background: #f9f9f9;
+  font-weight: 400;
+  transform: none;
+}
+
+.indicator-usecase {
+  width: 22px;
+  /* fixed width for alignment */
+  margin-right: 8px;
+  font-size: 1.2em;
+  display: inline-flex;
+  justify-content: center;
+}
+
+.indicator-progress {
+  margin-left: auto;
+  font-size: 11px;
+  background: #e0e0e0;
+  padding: 2px 6px;
+  border-radius: 12px;
+  line-height: 1;
+  font-weight: 600;
+  color: #333;
+  font-family: 'Fira Mono', 'Ubuntu Mono', monospace;
+}
+
+.indicator-item.indicator-possible .indicator-progress {
+  background: #4caf50;
+  color: #fff;
+}
+
+.indicator-missing-fields {
+  font-size: 10px;
+  color: #999;
+  margin-left: 8px;
+  font-style: italic;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  max-width: 120px;
+  vertical-align: middle;
+}
