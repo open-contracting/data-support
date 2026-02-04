@@ -90,7 +90,7 @@ def get_schema():
 
 def text_to_bool(value=None):
     """Convert yes or no to True or False."""
-    return {"Ja": value if value else True, "Nee": None if value else False}
+    return {"Ja": value or True, "Nee": None if value else False}
 
 
 def set_value_when_not_na(data, main_column, new_column, value):
