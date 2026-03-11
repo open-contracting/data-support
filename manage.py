@@ -4,6 +4,8 @@ from pathlib import Path
 
 import click
 
+from cli import register_all_commands
+
 
 @click.group()
 def cli():
@@ -66,6 +68,10 @@ def update_crowdinyml_files(pot_dir, locale_dir, project_id, ignore):
 
     with configfile.open("w") as f:
         json.dump(config, f, indent=2)
+
+
+# Register commands from cli package
+register_all_commands(cli)
 
 
 if __name__ == "__main__":
