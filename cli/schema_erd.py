@@ -77,7 +77,7 @@ def _find_orphaned_types(all_schemas, excluded_types):
 
 def _safe_name(name):
     """Convert schema name to safe identifier for diagrams."""
-    return name.replace("-", "_").replace(".", "_").replace(" ", "_")
+    return name.replace("-", "_").replace(".", "_").replace(" ", "_").replace("|", "_or_")
 
 
 def _get_type_str(prop_schema):
@@ -187,72 +187,6 @@ def _extract_refs_from_prop(prop_schema):
             )
 
     return refs
-
-
-def generate_mermaid_erd(all_schemas, no_properties, basic_types=None, max_properties=10):
-    """Generate Mermaid erDiagram."""
-    basic_types = basic_types or set()
-    lines = ["erDiagram"]
-
-    # Collect all relationships
-    all_rels = []
-    for name, schema in all_schemas.items():
-        if isinstance(schema, dict):
-            all_rels.extend(_extract_relationships(name, schema))
-
-    # Generate entity definitions with properties
-    if not no_properties:
-        for name, schema in sorted(all_schemas.items()):
-            if not isinstance(schema, dict) or name in basic_types:
-                continue
-
-            safe_name = _safe_name(name)
-            props = []
-
-            # Get properties from allOf or direct
-            if "allOf" in schema:
-                for item in schema["allOf"]:
-                    if "properties" in item:
-                        props.extend(item["properties"].items())
-            elif "properties" in schema:
-                props = list(schema["properties"].items())
-
-            if props:
-                lines.append(f"    {safe_name} {{")
-                display_props = props if max_properties == 0 else props[:max_properties]
-                for prop_name, prop_schema in display_props:
-                    type_str = _get_type_str(prop_schema)
-                    safe_type = _safe_name(type_str)
-                    lines.append(f"        {safe_type} {prop_name}")
-                if max_properties > 0 and len(props) > max_properties:
-                    lines.append(f"        string _plus_{len(props) - max_properties}_more")
-                lines.append("    }")
-
-    # Generate relationships
-    seen_rels = set()
-    for source, target, rel_type, label in all_rels:
-        # Skip relationships to/from basic types (except inheritance)
-        if target in basic_types and rel_type != "inherits":
-            continue
-        if source in basic_types:
-            continue
-
-        safe_source = _safe_name(source)
-        safe_target = _safe_name(target)
-
-        if rel_type == "inherits":
-            rel_key = (safe_source, safe_target, "inherits")
-            if rel_key not in seen_rels:
-                lines.append(f"    {safe_target} ||--|| {safe_source} : inherits")
-                seen_rels.add(rel_key)
-        else:
-            rel_key = (safe_source, safe_target, label)
-            if rel_key not in seen_rels:
-                comment = f" : {label}" if label else ""
-                lines.append(f"    {safe_source} {rel_type} {safe_target}{comment}")
-                seen_rels.add(rel_key)
-
-    return "\n".join(lines)
 
 
 def _get_color_key(name):
@@ -399,13 +333,6 @@ def register_command(cli):
     @cli.command()
     @click.argument("schema_file", type=click.Path(exists=True))
     @click.option("-o", "--output", type=click.Path(), help="Output file (default: stdout)")
-    @click.option(
-        "--format",
-        "fmt",
-        type=click.Choice(["mermaid", "dot"]),
-        default="mermaid",
-        help="Output format: mermaid (erDiagram) or dot (Graphviz)",
-    )
     @click.option("--no-properties", is_flag=True, help="Hide properties, show only relationships")
     @click.option(
         "--basic-threshold",
@@ -424,7 +351,7 @@ def register_command(cli):
         type=click.Path(),
         help="Output file for a second ERD showing only the omitted basic types",
     )
-    def schema_erd(schema_file, output, fmt, no_properties, basic_threshold, max_properties, basic_types_output):
+    def schema_erd(schema_file, output, no_properties, basic_threshold, max_properties, basic_types_output):
         """
         Generate an ERD diagram from a deduplicated JSON Schema file.
 
@@ -489,10 +416,7 @@ def register_command(cli):
         # Combine all excluded types
         excluded_types = basic_types | orphaned_types | unreferenced
 
-        if fmt == "mermaid":
-            result = generate_mermaid_erd(all_schemas, no_properties, excluded_types, max_properties)
-        else:
-            result = generate_dot_erd(all_schemas, no_properties, excluded_types, max_properties)
+        result = generate_dot_erd(all_schemas, no_properties, excluded_types, max_properties)
 
         if output:
             Path(output).write_text(result)
@@ -507,10 +431,7 @@ def register_command(cli):
             # Also include orphaned types that depend on basic types
             basic_schemas.update({name: all_schemas[name] for name in orphaned_types if name in all_schemas})
 
-            if fmt == "mermaid":
-                basic_result = generate_mermaid_erd(basic_schemas, no_properties, set(), max_properties)
-            else:
-                basic_result = generate_dot_erd(basic_schemas, no_properties, set(), max_properties)
+            basic_result = generate_dot_erd(basic_schemas, no_properties, set(), max_properties)
 
             Path(basic_types_output).write_text(basic_result)
             click.echo(f"Wrote {len(basic_result)} bytes to {basic_types_output} (basic types ERD)")
