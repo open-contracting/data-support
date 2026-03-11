@@ -1,58 +1,55 @@
+import functools
 import json
 from collections import defaultdict
 from pathlib import Path
 
 import click
 
+from cli.util import ref_name
+
 # Always include in ERD (never prune even if frequently referenced).
 NEVER_PRUNE = set()
 
 
-def _count_references(all_schemas):
-    """Count how many times each schema is referenced."""
-    counts = defaultdict(int)
-
-    def count_refs(obj):
-        if isinstance(obj, dict):
-            if "$ref" in obj:
-                ref_name = obj["$ref"].split("/")[-1]
-                counts[ref_name] += 1
-            for v in obj.values():
-                count_refs(v)
-        elif isinstance(obj, list):
-            for v in obj:
-                count_refs(v)
-
-    for schema in all_schemas.values():
-        count_refs(schema)
-
-    return counts
+def _collect_all_refs(obj):
+    """Yield all $ref schema names from a JSON structure."""
+    if isinstance(obj, dict):
+        if "$ref" in obj:
+            yield ref_name(obj)
+        for v in obj.values():
+            yield from _collect_all_refs(v)
+    elif isinstance(obj, list):
+        for v in obj:
+            yield from _collect_all_refs(v)
 
 
-def _get_references_from(schema):
-    """Get all schema names referenced by a schema."""
-    refs = set()
+def _build_reference_map(all_schemas):
+    """
+    Build forward reference map and counts in a single pass.
 
-    def collect_refs(obj):
-        if isinstance(obj, dict):
-            if "$ref" in obj:
-                refs.add(obj["$ref"].split("/")[-1])
-            for v in obj.values():
-                collect_refs(v)
-        elif isinstance(obj, list):
-            for v in obj:
-                collect_refs(v)
+    Returns (ref_counts, refs_from) where:
+    - ref_counts: {schema_name: int} — how many times each schema is referenced
+    - refs_from: {schema_name: set} — which schemas each schema references
+    """
+    ref_counts = defaultdict(int)
+    refs_from = {}
 
-    collect_refs(schema)
-    return refs
+    for name, schema in all_schemas.items():
+        refs = set()
+        for ref in _collect_all_refs(schema):
+            ref_counts[ref] += 1
+            refs.add(ref)
+        refs_from[name] = refs
+
+    return ref_counts, refs_from
 
 
-def _find_orphaned_types(all_schemas, excluded_types):
+def _find_orphaned_types(all_schemas, refs_from, excluded_types):
     """Find schemas only referenced by excluded types (recursively)."""
     # Build reverse reference map: schema -> set of schemas that reference it
     referenced_by = defaultdict(set)
-    for name, schema in all_schemas.items():
-        for ref in _get_references_from(schema):
+    for name, refs in refs_from.items():
+        for ref in refs:
             referenced_by[ref].add(name)
 
     orphaned = set()
@@ -83,18 +80,18 @@ def _safe_name(name):
 def _get_type_str(prop_schema):
     """Get a simple type string for a property."""
     if "$ref" in prop_schema:
-        return prop_schema["$ref"].split("/")[-1]
+        return ref_name(prop_schema)
     if "type" in prop_schema:
         t = prop_schema["type"]
         if t == "array" and "items" in prop_schema:
             items = prop_schema["items"]
             if "$ref" in items:
-                return items["$ref"].split("/")[-1] + "[]"
+                return ref_name(items) + "[]"
             # Handle anyOf/oneOf in array items
             for key in ("anyOf", "oneOf"):
                 if key in items:
                     types = [
-                        opt["$ref"].split("/")[-1]
+                        ref_name(opt)
                         for opt in _iter_union_options(items[key])
                         if isinstance(opt, dict) and "$ref" in opt
                     ]
@@ -106,7 +103,7 @@ def _get_type_str(prop_schema):
     for key in ("anyOf", "oneOf"):
         if key in prop_schema:
             types = [
-                opt["$ref"].split("/")[-1]
+                ref_name(opt)
                 for opt in _iter_union_options(prop_schema[key])
                 if isinstance(opt, dict) and "$ref" in opt
             ]
@@ -125,7 +122,7 @@ def _extract_relationships(name, schema):
     if "allOf" in schema:
         for item in schema["allOf"]:
             if "$ref" in item:
-                parent = item["$ref"].split("/")[-1]
+                parent = ref_name(item)
                 relationships.append((name, parent, "inherits", ""))
             if "properties" in item:
                 relationships.extend(_extract_prop_relationships(name, item["properties"]))
@@ -161,18 +158,18 @@ def _extract_refs_from_prop(prop_schema):
     refs = []
 
     if "$ref" in prop_schema:
-        refs.append((prop_schema["$ref"].split("/")[-1], False))
+        refs.append((ref_name(prop_schema), False))
 
     # Handle array items
     if "items" in prop_schema:
         items = prop_schema["items"]
         if "$ref" in items:
-            refs.append((items["$ref"].split("/")[-1], True))
+            refs.append((ref_name(items), True))
         # Handle anyOf/oneOf in array items
         for key in ("anyOf", "oneOf", "allOf"):
             if key in items:
                 refs.extend(
-                    (option["$ref"].split("/")[-1], True)
+                    (ref_name(option), True)
                     for option in _iter_union_options(items[key])
                     if isinstance(option, dict) and "$ref" in option
                 )
@@ -181,7 +178,7 @@ def _extract_refs_from_prop(prop_schema):
     for key in ("anyOf", "oneOf", "allOf"):
         if key in prop_schema:
             refs.extend(
-                (option["$ref"].split("/")[-1], False)
+                (ref_name(option), False)
                 for option in _iter_union_options(prop_schema[key])
                 if isinstance(option, dict) and "$ref" in option
             )
@@ -189,6 +186,7 @@ def _extract_refs_from_prop(prop_schema):
     return refs
 
 
+@functools.cache
 def _get_color_key(name):
     """
     Extract color key from schema name for coloring.
@@ -227,7 +225,7 @@ def _get_color_key(name):
     return "Other"
 
 
-def _generate_color_map(all_schemas, basic_types):
+def _generate_color_map(all_schemas, excluded):
     """Generate a color map for schema types (based on last dot section)."""
     # Colorblind-friendly palette based on Okabe-Ito (pastel variants for readability)
     # https://jfly.uni-koeln.de/color/
@@ -244,14 +242,14 @@ def _generate_color_map(all_schemas, basic_types):
         "#DDCC77",  # sand
     ]
 
-    color_keys = sorted({_get_color_key(name) for name in all_schemas if name not in basic_types})
+    color_keys = sorted({_get_color_key(name) for name in all_schemas if name not in excluded})
     return {key: colors[i % len(colors)] for i, key in enumerate(color_keys)}
 
 
-def generate_dot_erd(all_schemas, no_properties, basic_types=None, max_properties=10):
+def generate_dot_erd(all_schemas, no_properties, excluded=None, max_properties=10):
     """Generate Graphviz DOT format."""
-    basic_types = basic_types or set()
-    color_map = _generate_color_map(all_schemas, basic_types)
+    excluded = excluded or set()
+    color_map = _generate_color_map(all_schemas, excluded)
 
     lines = [
         "digraph ERD {",
@@ -269,7 +267,7 @@ def generate_dot_erd(all_schemas, no_properties, basic_types=None, max_propertie
 
     # Generate nodes
     for name, schema in sorted(all_schemas.items()):
-        if not isinstance(schema, dict) or name in basic_types:
+        if not isinstance(schema, dict) or name in excluded:
             continue
 
         safe_name = _safe_name(name)
@@ -303,10 +301,10 @@ def generate_dot_erd(all_schemas, no_properties, basic_types=None, max_propertie
     # Generate edges
     seen_rels = set()
     for source, target, rel_type, label in all_rels:
-        # Skip relationships to/from basic types (except inheritance)
-        if target in basic_types and rel_type != "inherits":
+        # Skip relationships to/from excluded types (except inheritance)
+        if target in excluded and rel_type != "inherits":
             continue
-        if source in basic_types:
+        if source in excluded:
             continue
 
         safe_source = _safe_name(source)
@@ -368,8 +366,8 @@ def register_command(cli):
         defs = data.get("$defs", {})
         all_schemas = {**defs, **schemas}
 
-        # Count references to each schema
-        ref_counts = _count_references(all_schemas)
+        # Build reference map in a single pass
+        ref_counts, refs_from = _build_reference_map(all_schemas)
 
         # Identify basic types (referenced more than threshold times)
         basic_types = {
@@ -382,27 +380,24 @@ def register_command(cli):
                 click.echo(f"  - {name} ({ref_counts[name]} refs)", err=True)
 
         # Find orphaned types (only referenced by basic types)
-        orphaned_types = _find_orphaned_types(all_schemas, basic_types)
+        orphaned_types = _find_orphaned_types(all_schemas, refs_from, basic_types)
         if orphaned_types:
             click.echo(f"Omitting {len(orphaned_types)} orphaned types (only referenced by basic types):", err=True)
             for name in sorted(orphaned_types):
                 click.echo(f"  - {name}", err=True)
 
         # Find unreferenced types by checking reachability from main procedure schemas
-        # Main schemas are procedure types (contain "Procedure" in name)
         main_schemas = {name for name in schemas if "Procedure" in name}
         reachable = set(main_schemas)
 
-        # Iteratively find all reachable schemas
+        # Iteratively find all reachable schemas using precomputed refs_from
         to_process = set(main_schemas)
         while to_process:
             current = to_process.pop()
-            schema = all_schemas.get(current)
-            if schema:
-                for ref in _get_references_from(schema):
-                    if ref not in reachable and ref in all_schemas:
-                        reachable.add(ref)
-                        to_process.add(ref)
+            for ref in refs_from.get(current, set()):
+                if ref not in reachable and ref in all_schemas:
+                    reachable.add(ref)
+                    to_process.add(ref)
 
         # Unreferenced = exists but not reachable from main schemas
         unreferenced = set(all_schemas.keys()) - reachable - basic_types - orphaned_types

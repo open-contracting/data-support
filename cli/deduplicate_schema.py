@@ -7,6 +7,8 @@ from pathlib import Path
 import click
 import requests
 
+from cli.util import ref_name
+
 # Timeout for HTTP requests in seconds.
 REQUEST_TIMEOUT = 30
 # Minimum occurrences to extract a schema into $defs.
@@ -230,9 +232,9 @@ def deduplicate_identical_schemas(defs, schemas):
     def replace_refs(obj):
         if isinstance(obj, dict):
             if "$ref" in obj:
-                ref_name = obj["$ref"].split("/")[-1]
-                if ref_name in canonical:
-                    return {**obj, "$ref": f"#/$defs/{canonical[ref_name]}"}
+                rn = ref_name(obj)
+                if rn in canonical:
+                    return {**obj, "$ref": f"#/$defs/{canonical[rn]}"}
             return {k: replace_refs(v) for k, v in obj.items()}
         if isinstance(obj, list):
             return [replace_refs(v) for v in obj]
@@ -550,9 +552,9 @@ def apply_allof_inheritance(schemas, defs):
                     def update_refs(obj):
                         if isinstance(obj, dict):
                             if "$ref" in obj:
-                                ref_name = obj["$ref"].split("/")[-1]
-                                if ref_name in renames:
-                                    return {**obj, "$ref": f"#/$defs/{renames[ref_name]}"}
+                                rn = ref_name(obj)
+                                if rn in renames:
+                                    return {**obj, "$ref": f"#/$defs/{renames[rn]}"}
                             return {k: update_refs(v) for k, v in obj.items()}
                         if isinstance(obj, list):
                             return [update_refs(v) for v in obj]
@@ -579,7 +581,7 @@ def extract_common_from_siblings(schemas, defs):
         if "allOf" in schema:
             for item in schema["allOf"]:
                 if "$ref" in item:
-                    return item["$ref"].split("/")[-1]
+                    return ref_name(item)
         return None
 
     def get_own_props(schema):
@@ -670,7 +672,7 @@ def extract_common_from_siblings(schemas, defs):
             # Copy other allOf items (like mixins) except the old base and properties
             for item in child_schema.get("allOf", []):
                 if "$ref" in item:
-                    ref = item["$ref"].split("/")[-1]
+                    ref = ref_name(item)
                     if ref != base_name:
                         new_allof.append(item)
 
@@ -702,7 +704,7 @@ def extract_dutch_english_mixins(schemas, defs):
         if "allOf" in schema:
             for item in schema["allOf"]:
                 if "$ref" in item:
-                    return item["$ref"].split("/")[-1]
+                    return ref_name(item)
         return None
 
     def get_own_props(schema):
@@ -967,7 +969,7 @@ def extract_refs(obj, refs):
     """Recursively extract all $ref schema names from an object."""
     if isinstance(obj, dict):
         if "$ref" in obj:
-            refs.add(obj["$ref"].split("/")[-1])
+            refs.add(ref_name(obj))
         for v in obj.values():
             extract_refs(v, refs)
     elif isinstance(obj, list):
