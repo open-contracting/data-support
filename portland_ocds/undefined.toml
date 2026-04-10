@@ -1,0 +1,119 @@
+[datasource]
+connection = '/app/pdx_ocds_normalizer/database_client_undefined.db'
+
+[mapping]
+file = '/app/nightingale/undefined_mapping.xlsx'
+codelists = '/app/nightingale/codelists.xlsx'
+ocid_prefix = 'ocds-ptecst'
+force_publish = true
+# BuySpeed/AlternateId (has 8 characters and starts with 3 or 2) = SAP/Purchasing Document = SAP PO/Purchasing Document = B2G/Contract Number = TO/Contract Number
+selector = """
+SELECT
+  -- release
+  distinct
+  BPP."REQ_NBR" AS "Requisition Header Table (REQ_NBR)",
+  BPP."REQ_NBR" AS "Requisition Header Table  (REQ_NBR)",
+  BPP."LANGUAGE" AS "GENERAL (LANGUAGE)",
+  BPP."CURRENCY" AS "GENERAL (CURRENCY)",
+
+  -- tender
+  BPP."Bid Number" AS "Bid Header Table  (Bid Number)",
+  BPP."Bid Number Scheme" AS "Bid Header Table (BID NUMBER SCHEME)",
+  BPP."SHORT_DESC" AS "Requisition Header Table (SHORT_DESC)",
+  BPP."Req Header Column 5 Value" as "Req Header Custom Columns (Req Header Column 5 Value)",
+  BPP."Current Header Status and Descriptions" AS "Bid Header Table  (Current Header Status and Descriptions)",
+
+  -- selection criteria
+  BPP."Bid Header Column 11 Value" as "Bid Header Custom Columns (Bid Header Column 11 Value)",
+  BPP."Bid Header Column 13 Value" as "Bid Header Custom Columns (Bid Header Column 13 Value)",
+  BPP."TECHNICAL 1" as "Prequalification Type (TECHNICAL 1)",
+  BPP."DESCRIPTION 1" as "Prequalification Type (DESCRIPTION 1)",
+  BPP."APPLIES TO 1" as "Prequalification Type (APPLIES TO 1)",
+  BPP."VERIFICATION METHOD 1" as "Prequalification Type (VERIFICATION METHOD 1)",
+
+  BPP."ECONOMIC 2" as "Prequalification Type (ECONOMIC 2)",
+  BPP."DESCRIPTION 2" as "Prequalification Type (DESCRIPTION 2)",
+  BPP."APPLIES TO 2" as "Prequalification Type (APPLIES TO 2)",
+  BPP."VERIFICATION METHOD 2" as "Prequalification Type (VERIFICATION METHOD 2)",
+  CAST(BPP."Bid Header Column 12 Value" AS TEXT) as "Bid Header Custom Columns (Bid Header Column 12 Value)",
+
+  BPP."TECHNICAL 3" as "Prequalification Type (TECHNICAL 3)",
+  BPP."DESCRIPTION 3" as "Prequalification Type (DESCRIPTION 3)",
+  BPP."APPLIES TO 3" as "Prequalification Type (APPLIES TO 3)",
+  BPP."VERIFICATION METHOD 3" as "Prequalification Type (VERIFICATION METHOD 3)",
+
+  BPP."ECONOMIC 4" as "Prequalification Type (ECONOMIC 4)",
+  BPP."DESCRIPTION 4" as "Prequalification Type (DESCRIPTION 4)",
+  BPP."APPLIES TO 4" as "Prequalification Type (APPLIES TO 4)",
+  BPP."VERIFICATION METHOD 4" as "Prequalification Type (VERIFICATION METHOD 4)",
+  CAST(BPP."Bid Header Column 14 Value" AS TEXT) as "Bid Header Custom Columns (Bid Header Column 14 Value)",
+
+  BPP."SUITABILITY 5" as "Prequalification Type (SUITABILITY 5)",
+  BPP."DESCRIPTION 5" as "Prequalification Type (DESCRIPTION 5)",
+  BPP."APPLIES TO 5" as "Prequalification Type (APPLIES TO 5)",
+  BPP."VERIFICATION METHOD 5" as "Prequalification Type (VERIFICATION METHOD 5)",
+  BPP."Bid Header Column 3 Value" AS "Bid Header Custom Columns (Bid Header Custom Column 3 Value)",
+
+  CASE
+        WHEN BPP."Req Header Column 12 Value" IS NOT NULL AND BPP."Req Header Column 12 Value" != '' THEN BPP."Req Header Column 12 Value"
+        WHEN BPP."Type Code" IS NOT NULL AND BPP."Type Code" != '' THEN BPP."Type Code"
+        WHEN BPP."PO Type Code" IS NOT NULL AND BPP."PO Type Code" != '' THEN BPP."PO Type Code"
+        ELSE ''
+  END AS "Projects (MAIN PROCUREMENT CATEGORY)",
+  CASE
+        WHEN BPP."Type Code" IS NOT NULL AND BPP."Type Code" != '' THEN BPP."Type Code"
+        WHEN BPP."PO Type Code" IS NOT NULL AND BPP."PO Type Code" != '' THEN BPP."PO Type Code"
+        ELSE ''
+  END AS "Projects (AWARD CRITERIA)",
+  BPP."Bid - In Progress Date" AS "Bid Status Dates (Bid - In Progress Date)",
+  BPP."Bid - Opened Date" AS "Bid Status Dates (Bid - Opened Date)",
+  CASE
+        WHEN BPP."Procurement Method" IN ('selective', 'open') THEN 'electronicSubmission'
+        WHEN BPP."Procurement Method" IN ('direct', 'limited') THEN 'written'
+        ELSE ''
+  END AS "Bid Header Custom Columns (SUBMISSIONMETHOD)",
+
+  -- procuring entity/parties
+  BPP."BuySpeed Bureau Buyer ID" AS "Bureau Reference Sheet (BUYER ID)",
+  BPP."Req Header Column 1 Value" AS "Req Header Custom Columns (Req Header Column 1 Value)",
+  BRR."BuySpeed Bureau Name" AS "Bureau Reference Sheet (BuySpeed Bureau Name)",
+  BPP."BuySpeed Bureau Procuring Entity Tag" AS "Bureau Reference Sheet (PROCURING ENTITY TAG)",
+  BPP."BuySpeed Bureau Buyer Tag" AS "Bureau Reference Sheet (BUYER TAG)",
+  BPP."BuySpeed Bureau Payer Tag" AS "Bureau Reference Sheet (PAYER TAG)",
+  BPP."BuySpeed Bureau Classification Scheme" AS "Bureau Reference Sheet (BUYSPEED BUREAU CLASSIFICATION SCHEME)",
+
+  -- award/docs
+  BPP."PO - In Progress Date" AS "PO Status Dates  (PO - In Progress Date)",
+  BPP."Procurement Method" AS "Bid Header Custom Columns (PROCUREMENTMETHOD)",
+
+  -- supplier
+  BPP."VENDOR ADDITIONAL IDENT SCHEME" as "Vendor (VENDOR ADDITIONAL IDENT SCHEME)",
+  BPP."Vendor Nbr" AS "Vendor (Vendor Nbr)",
+  BPP."Vendor Name" AS "Vendor (Vendor Name)",
+  BPP."Vendor ID" AS "Vendor (VENDOR ID)",
+  BPP."Vendor Tag" AS "Vendor (VENDOR TAG)",
+  BPP."Vendor Supplier Tag" AS "Vendor (SUPPLIER TAG)",
+  BPP."Vendor Payee Tag" AS "Vendor (PAYEE TAG)",
+  BPP."Req - In Progress Date" AS "Requisition Status Dates (Req - In Progress Date)",
+
+  -- for joins
+  BRR."BuySpeed Abbreviation" AS "Bureau Reference Sheet (BuySpeed Abbreviation)",
+  BPP."Alternate Id.1" AS "BuySpeed Project Projects (Alternate Id.1)"
+
+FROM [BuySpeed Project Projects] as BPP
+LEFT JOIN [Bureau Reference Sheet] as BRR
+    ON BPP."Req Header Column 1 Value" = BRR."BuySpeed Abbreviation"
+
+ORDER BY BPP."REQ_NBR"
+"""
+
+
+[publishing]
+publisher = 'City of Portland'
+version = '1.1'
+publicationPolicy = 'https://www.portland.gov/business-opportunities/ocds/city-portland-ocds-publication'
+base_uri = 'https://www.opendata.portlandoregon.gov/'
+license = 'https://opendatacommons.org/licenses/pddl/1-0/'
+
+[output]
+directory = '/app/nightingale/output'

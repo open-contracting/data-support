@@ -1,0 +1,120 @@
+[datasource]
+connection = '/app/pdx_ocds_normalizer/database_client_direct.db'
+
+[mapping]
+file = '/app/nightingale/direct_mapping.xlsx'
+codelists = '/app/nightingale/codelists.xlsx'
+ocid_prefix = 'ocds-ptecst'
+force_publish = true
+# BuySpeed/AlternateId (has 8 characters and starts with 3 or 2) = SAP/Purchasing Document = SAP PO/Purchasing Document = B2G/Contract Number = TO/Contract Number
+selector = """
+WITH AggregatedPO AS (
+    SELECT
+       POLR."Purchasing Document" as Purchasing_doc,
+       MIN(POLR."Created On")     AS Min_Created_On,
+       MAX(POLR."Delivery Date")  AS Max_Delivery_Date,
+       SUM(POLR."Gross Order Value") AS "FULL ORDERS AMOUNT"
+FROM [PO Listing Report] as POLR
+GROUP BY POLR."Purchasing Document"
+)
+SELECT
+  -- release
+  distinct
+  POLR."LANGUAGE" AS "GENERAL (LANGUAGE)",
+    POLR."Buyer ID" AS "PO Listing Report (BUYER ID)",
+    POLR."VENDOR ID" AS "PO Listing Report (VENDOR ID)",
+
+  POLR."Purchasing Document" AS "PO Listing Report (Purchasing Document)",
+  POLR."CONTRACT ITEM ID" AS "PO Listing Report (CONTRACT ITEM ID)",
+
+  -- tender
+  CASE
+        WHEN POLR."Purchasing Group" IS NOT NULL AND POLR."Purchasing Group" != '' THEN POLR."Purchasing Group"
+        ELSE ''
+  END AS "PO Listing Report (MAIN PROCUREMENT CATEGORY)",
+  CASE
+        WHEN POLR."Procurement Method" IN ('selective', 'open') THEN 'electronicSubmission'
+        WHEN POLR."Procurement Method" IN ('direct', 'limited') THEN 'written'
+        ELSE ''
+  END AS "PO Listing Report (SUBMISSIONMETHOD)",
+
+  -- awards
+     POLR."Award Status" AS "PO Listing Report (AWARD STATUS)",
+  AggPO."FULL ORDERS AMOUNT" AS "PO Listing Report (FULL CONTRACT AMOUNT)",
+
+    -- buyer
+    BA."Bureau" AS "Business Area (Bureau)",
+    POLR."Business Area" AS "PO Listing Report (Business Area)",
+    POLR."Business Identifier Scheme" AS "PO Listing Report (BUSINESS IDENTIFIER SCHEME)",
+
+  -- award/docs
+  POLR."Procurement Method" AS "PO Listing Report (PROCUREMENTMETHOD)",
+
+  -- supplier
+ POLR."VENDOR IDENTIFIER SCHEME" as "PO Listing Report (VENDOR IDENTIFIER SCHEME)",
+ POLR."Vendor" AS "PO Listing Report (Vendor)",
+ POLR."Vendor Name" AS "PO Listing Report (Name 1)",
+
+  --contracts
+  UC.code as "UNIT CLASSIFICATION (CODE)",
+  UC.name as "UNIT CLASSIFICATION (NAME)",
+  UC.scheme as "UNIT CLASSIFICATION (SCHEME)",
+  POLR."UNIT AMOUNT" as "PO Listing Report (UNIT AMOUNT)",
+
+  -- purchase orders
+  POLR."Short Text ITEM 10" AS "Purchase Orders (SHORT TEXT ITEM 10)",
+  POLR."Tender Status" AS "PO Listing Report (TENDER STATUS)",
+  POLR."Contract Status" AS "PO Listing Report (CONTRACT STATUS)",
+  POLR."Order Quantity" AS "PO Listing Report (Order Quantity)",
+
+  --implementation
+  POLR."MILESTONE ID" AS "PO Listing Report (MILESTONE ID)",
+  POLR."Short Text" AS "PO Listing Report (Short Text)",
+  AggPO.Min_Created_On AS "Purchase Orders (CREATED ON MIN)",
+  AggPO.Max_Delivery_Date AS "Purchase Orders (DELIVERY DATE MAX)",
+  POLR."Delivery Date" AS "PO Listing Report (Delivery Date)",
+  POLR."Created On" AS "PO Listing Report (Created On)",
+  POLR."Total Invoiced to Date" AS "PO Listing Report (Total Invoiced to Date)",
+  POLR."ITEM CLASSIFICATION" AS "PO Listing Report (ITEM CLASSIFICATION)",
+  POLR."Material Group" AS "PO Listing Report (Material Group)",
+  MGN.description AS "Material Group (NIGP) (description)",
+  POLR."MILESTONE TYPE" AS "PO Listing Report (MILESTONE TYPE)",
+  POLR."INVOICING STATUS" AS "PO Listing Report (INVOICING STATUS)",
+  POLR."CURRENCY" AS "GENERAL (CURRENCY)",
+
+  -- procuring entity/parties
+    POLR."Procuring Entity Tag" AS "PO Listing Report (PROCURING ENTITY TAG)",
+    POLR."Buyer Tag" AS "PO Listing Report (BUYER TAG)",
+    POLR."Tenderer Tag" AS "Vendor (VENDOR TAG)",
+    POLR."Supplier Tag" AS "Vendor (SUPPLIER TAG)",
+    POLR."Payee Tag" AS "PO Listing Report (PAYER TAG)",
+    POLR."Payee Tag" AS "Vendor (PAYEE TAG)",
+
+  -- for joins
+  POLR."Outline agreement" AS "Outline agreement"
+
+FROM [PO Listing Report] as POLR
+LEFT JOIN AggregatedPO AS AggPO
+    ON AggPO.Purchasing_doc = POLR."Purchasing Document"
+LEFT JOIN "unit_classification" as UC ON POLR."Order Unit" = CASE
+        WHEN UC.code = 'M4' THEN 'USD'
+        WHEN UC.code = 'NAR' THEN 'EA'
+  END
+LEFT JOIN "material group nigp" as MGN
+    on MGN.code = POLR."Material Group"
+LEFT JOIN "business area" as BA
+    on BA."Business Area" = POLR."Business Area"
+WHERE (NOT exists(SELECT * FROM [BuySpeed Project Projects] AS BPP
+  WHERE POLR."Purchasing Document" = BPP."Alternate Id.1"))
+"""
+
+
+[publishing]
+publisher = 'City of Portland'
+version = '1.1'
+publicationPolicy = 'https://www.portland.gov/business-opportunities/ocds/city-portland-ocds-publication'
+base_uri = 'https://www.opendata.portlandoregon.gov/'
+license = 'https://opendatacommons.org/licenses/pddl/1-0/'
+
+[output]
+directory = '/app/nightingale/output'

@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=61.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ocdsnightingale"
+version = "0.0.1"
+authors = [{name = "Open Contracting Partnership", email = "data@open-contracting.org"}]
+description = "Transform flat data from a SQLite database into the Open Contracting Data Standard (OCDS) format."
+readme = "README.md"
+license = {text = "BSD"}
+urls = {Homepage = "https://github.com/open-contracting/nightingale"}
+classifiers = [
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: Implementation :: CPython",
+]
+
+dependencies = [
+    "click",
+    "click-pathlib",
+    "dict_hash",
+    "ocdskit",
+    "openpyxl",
+    "pydantic",
+    "simplejson",
+]
+
+[project.scripts]
+ocdsnightingale = "nightingale.cli:run"
+
+[project.optional-dependencies]
+test = [
+    "coverage",
+    "pytest",
+    "pytest-mock",
+]
+types = [
+    "mypy",
+    "types-openpyxl",
+    "types-simplejson",
+]
+
+[tool.setuptools.packages.find]
+exclude = [
+    "tests",
+    "tests.*",
+]
+
+[tool.ruff]
+line-length = 119
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["ALL"]
+ignore = [
+    "ANN", "C901", "COM812", "D203", "D212", "D415", "EM", "ISC001", "PERF203", "PLR091", "Q000",
+    "D1",
+]
+
+[tool.ruff.lint.flake8-builtins]
+builtins-ignorelist = ["copyright"]
+
+[tool.ruff.lint.flake8-unused-arguments]
+ignore-variadic-names = true
+
+[tool.ruff.lint.per-file-ignores]
+"docs/conf.py" = ["D100", "INP001"]
+"tests/*" = [
+    "ARG001", "D", "FBT003", "INP001", "PLR2004", "S", "TRY003",
+]
+"nightingale/cli.py" = ["BLE001", "TRY003"]  # click
+
+[tool.mypy]
+strict = true
+warn_unreachable = true
+exclude = "(build|docs|tests)/"
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
+
+[tool.uv.pip]
+exclude-newer = "1 week"
