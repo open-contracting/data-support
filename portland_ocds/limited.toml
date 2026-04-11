@@ -169,6 +169,9 @@ LEFT JOIN "material group nigp" as MGN
 
 ORDER BY BPP."REQ_NBR"
 """
+milestone_lookup_sql = "SELECT code, title, description FROM [releases to Dte]"
+split_milestone_codes = true
+codelist_passthrough_paths = ["/tender/status", "/tender/procurementMethod"]
 
 
 [publishing]

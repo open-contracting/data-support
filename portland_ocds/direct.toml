@@ -107,6 +107,9 @@ LEFT JOIN "business area" as BA
 WHERE (NOT exists(SELECT * FROM [BuySpeed Project Projects] AS BPP
   WHERE POLR."Purchasing Document" = BPP."Alternate Id.1"))
 """
+milestone_lookup_sql = "SELECT code, title, description FROM [releases to Dte]"
+split_milestone_codes = true
+codelist_passthrough_paths = ["/tender/status", "/tender/procurementMethod"]
 
 
 [publishing]
