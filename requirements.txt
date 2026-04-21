@@ -42,7 +42,7 @@ jsonref==1.1.0
     #   ocdsextensionregistry
     #   ocdskit
     #   ocdsmerge
-lxml==4.9.3
+lxml==6.1.0
     # via flattentool
 numpy==1.24.4
     # via
