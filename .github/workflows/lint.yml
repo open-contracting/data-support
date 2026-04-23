@@ -7,3 +7,7 @@ jobs:
       contents: write
     secrets:
       personal-access-token: ${{ secrets.PAT }}
+    with:
+      ocds-extension-paths: netherlands_ocds_transformer/local_extensions.json
+      # Extends and stores the release schema to unflatten data.
+      ocds-schema-exceptions: schema.json
