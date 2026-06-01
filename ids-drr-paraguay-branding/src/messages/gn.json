@@ -1,0 +1,87 @@
+{
+  "common": {
+    "loading": "Henyhẽhína...",
+    "numberLocale": "es-PY",
+    "redirectConfirm": "Oñembohasáta ndéve ko'ápe \"{url}\".",
+    "filters": {
+      "heading": "Mbohekoha",
+      "trigger": "Mbohekoha",
+      "apply": "Eiporu",
+      "reset": "Embojevy",
+      "clearAll": "Mbogue opavave",
+      "close": "Mboty"
+    },
+    "copy": {
+      "trigger": "Eikopia URL",
+      "success": "¡URL ojekopiáma!",
+      "error": "Ndaikatúi ojekopia URL."
+    }
+  },
+  "site": {
+    "name": "Idris",
+    "description": "Plataforma jeguerojera ojepuru hag̃ua tata mymba ñorairõ rechakaha Paraguáipe.",
+    "ogLocale": "gn_PY"
+  },
+  "nav": {
+    "menu": "Poravorã",
+    "homeAlt": "{name} ñepyrũ",
+    "links": {
+      "home": "Ñepyrũ",
+      "analytics": "Mba'epapaha",
+      "datasets": "Tetepy aty",
+      "aboutUs": "Ore rehe"
+    }
+  },
+  "factors": {
+    "riskScore": {
+      "name": "Tekoasy ra'anga"
+    },
+    "hazard": {
+      "name": "Tata mymba apañuãi",
+      "description": "Tata mymba osẽ kuaa ha omombe'u kuaáva tekove térã mba'e oĩva."
+    },
+    "exposure": {
+      "name": "Jehechauka",
+      "description": "Tekove, tape, óga ha ambue mba'e oĩva tata mymba ñembyaiha rendápe."
+    },
+    "vulnerability": {
+      "name": "Ikangýva",
+      "description": "Tekove térã tetãygua imbarete'ỹva tata mymba mba'eveharavoi rovake."
+    },
+    "governmentResponse": {
+      "name": "Tetã pytyvõ",
+      "description": "Tetã ipu'aka mba'éichapa ombojere kuaa tekoasy térã ñembyai."
+    }
+  },
+  "home": {
+    "hero": {
+      "tagline": "Ehechauka mba'epapaha, ehechakuaa tekoasy ha emoheñói tekorosã"
+    },
+    "analytics": {
+      "heading": "Mba'epapaha rechaha",
+      "description": "Ehechauka tata mymba apañuãi rechakaha opavave departaméntope ha distritope Paraguáipe.",
+      "comingSoon": "Oguahẽta"
+    }
+  },
+  "analytics": {
+    "views": {
+      "map": "Mapa",
+      "chart": "Ta'angambyky",
+      "table": "Tabla",
+      "more": "Hetave"
+    },
+    "risk": {
+      "1": "Tekoasy michĩeterei",
+      "2": "Tekoasy michĩ",
+      "3": "Tekoasy mbytépe",
+      "4": "Tekoasy tuicha",
+      "5": "Tekoasy tuichaeterei"
+    }
+  },
+  "footer": {
+    "credit": "Idris-pegua techaukaha. Marandu apoñaiha."
+  },
+  "states": {
+    "paraguay": "Paraguái"
+  }
+}

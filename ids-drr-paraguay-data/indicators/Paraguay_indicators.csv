@@ -1,0 +1,19 @@
+indicatorSlug,indicatorTitle,indicatorDescription,indicatorCategory,parent,unit,datasource,visible_on_platform
+risk-score,Riesgo General de Incendios Forestales,"Puntaje compuesto de riesgo de incendios forestales que combina amenaza, exposición, vulnerabilidad y respuesta gubernamental.",Riesgo General de Incendios Forestales,,Puntaje,MODEL,y
+topsis-score,Resultado del modelo TOPSIS,Puntaje TOPSIS subyacente; no se muestra en la interfaz.,Riesgo General de Incendios Forestales,Riesgo General de Incendios Forestales,Puntaje,MODEL,n
+flood-hazard,Amenaza de Incendio Forestal,"Probabilidad de un evento de incendio forestal según la temperatura, la precipitación y la sequedad de la vegetación.",Amenaza,Riesgo General de Incendios Forestales,Puntaje,MODEL,y
+exposure,Exposición,"Personas, infraestructura y cobertura forestal ubicadas en áreas propensas a incendios.",Exposición,Riesgo General de Incendios Forestales,Puntaje,MODEL,y
+vulnerability,Vulnerabilidad,Susceptibilidad de poblaciones y activos ante los impactos de incendios forestales.,Vulnerabilidad,Riesgo General de Incendios Forestales,Puntaje,MODEL,y
+government-response,Respuesta Gubernamental,"Capacidad para prevenir, mitigar y responder a eventos de incendios forestales.",Respuesta Gubernamental,Riesgo General de Incendios Forestales,Puntaje,MODEL,y
+max-temp,Temperatura Máxima,Temperatura media diaria más alta observada en el período.,Amenaza,Amenaza de Incendio Forestal,°C,Synthetic,y
+mean-rain,Precipitación Media,Precipitación diaria promedio en el período; valores más bajos indican condiciones más secas.,Amenaza,Amenaza de Incendio Forestal,mm,Synthetic,y
+mean-ndvi,NDVI Medio,Índice de verdor de la vegetación; valores más bajos indican vegetación más seca y mayor disponibilidad de combustible.,Amenaza,Amenaza de Incendio Forestal,Índice,Synthetic,y
+sum-population,Población Total,Población total dentro de la unidad administrativa.,Exposición,Exposición,Personas,Synthetic,y
+total-hhd,Hogares Totales,Número total de hogares dentro de la unidad administrativa.,Exposición,Exposición,Hogares,Synthetic,y
+forest-cover-pct,Cobertura Forestal,Proporción del área terrestre clasificada como bosque.,Exposición,Exposición,%,Synthetic,y
+mean-sex-ratio,Razón de Sexo,Mujeres por cada 1000 hombres.,Vulnerabilidad,Vulnerabilidad,Razón,Synthetic,y
+sum-aged-population,Población Adulta Mayor,Población de 65 años o más.,Vulnerabilidad,Vulnerabilidad,Personas,Synthetic,y
+poverty-rate,Tasa de Pobreza,Proporción de hogares por debajo de la línea de pobreza nacional.,Vulnerabilidad,Vulnerabilidad,%,Synthetic,y
+fire-stations-count,Estaciones de Bomberos,Número de estaciones de bomberos operativas.,Respuesta Gubernamental,Respuesta Gubernamental,Recuento,Synthetic,y
+emergency-budget,Presupuesto de Emergencia,Presupuesto anual de respuesta a emergencias asignado al área.,Respuesta Gubernamental,Respuesta Gubernamental,PYG (millones),Synthetic,y
+response-personnel,Personal de Respuesta,Personal capacitado de respuesta a emergencias disponible en el área.,Respuesta Gubernamental,Respuesta Gubernamental,Personas,Synthetic,y

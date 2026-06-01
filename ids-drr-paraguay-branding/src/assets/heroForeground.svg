@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 342 140" width="342" height="140">
+  <title>IDRIS</title>
+  <!-- Three-stripe accent on the left, matching the Paraguay flag -->
+  <g>
+    <rect x="0" y="20" width="32" height="34" fill="#D52B1E"/>
+    <rect x="0" y="54" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="0" y="86" width="32" height="34" fill="#0038A8"/>
+  </g>
+  <text x="58" y="100" font-family="-apple-system,'Segoe UI',Inter,system-ui,sans-serif" font-size="92" font-weight="800" fill="#FFE066" letter-spacing="6">IDRIS</text>
+</svg>

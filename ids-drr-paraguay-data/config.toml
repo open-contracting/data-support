@@ -1,0 +1,49 @@
+# Backend configuration for the Paraguay (Idris) demo deployment.
+# File paths are resolved relative to this file.
+
+# Slugs always imported in addition to is_visible=True indicators.
+whitelist_indicators = ["topsis-score"]
+
+# Default data_period when a view doesn't specify one.
+default_time_period = "2026_03"
+
+# Geographic types below STATE → DISTRICT that should be treated as
+# "sub-district" in the frontend drill-down.
+subdistrict_types = ["SUB DISTRICT"]
+
+# Tolerance for the simplified geometry stored alongside each Geography
+# at import time. In degrees (SRID 4326); 0.003 is roughly 300 m.
+simplify_tolerance = 0.003
+
+# Grid size passed to ST_SnapToGrid, applied after simplification.
+snap_to_grid_size = 0.0001
+
+# Departments (18 features). Imported as DISTRICT under a single STATE
+# stub for Paraguay.
+[[geojson]]
+path = "geography/departments.geojson"
+geo_type = "DISTRICT"
+name_field = "DPTO_DESC"
+code_template = "{DPTO}"
+
+  [geojson.parent]  # stub
+  type = "STATE"
+  name = "Paraguay"
+  create_code = "PY"
+
+# Districts (263 features). Imported as SUB DISTRICT under their parent
+# department (looked up by department code).
+[[geojson]]
+path = "geography/districts.geojson"
+geo_type = "SUB DISTRICT"
+name_field = "DIST_DESC_"
+code_template = "{unique_ID}"
+
+  [geojson.parent]  # departments.geojson
+  type = "DISTRICT"
+  code_template = "{DPTO}"
+
+[[states]]
+name = "Paraguay"
+indicators = "indicators/Paraguay_indicators.csv"
+data = "data/Paraguay_data.csv"

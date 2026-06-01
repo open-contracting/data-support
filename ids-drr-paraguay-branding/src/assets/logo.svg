@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 60" width="130" height="60">
+  <title>Idris</title>
+  <!-- Three-stripe accent based on the Paraguay flag (red / white / blue) -->
+  <g>
+    <rect x="0" y="6" width="14" height="16" fill="#D52B1E"/>
+    <rect x="0" y="22" width="14" height="16" fill="#FFFFFF" stroke="#FFFFFF" stroke-width="0.5"/>
+    <rect x="0" y="38" width="14" height="16" fill="#0038A8"/>
+  </g>
+  <text x="28" y="42" font-family="-apple-system,'Segoe UI',Inter,system-ui,sans-serif" font-size="34" font-weight="700" fill="#FFFFFF" letter-spacing="0.5">Idris</text>
+</svg>

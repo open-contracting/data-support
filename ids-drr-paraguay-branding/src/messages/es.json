@@ -1,0 +1,260 @@
+{
+  "common": {
+    "loading": "Cargando...",
+    "na": "N/D",
+    "numberLocale": "es-PY",
+    "redirectConfirm": "Está siendo redirigido a \"{url}\".",
+    "filters": {
+      "heading": "Filtros",
+      "trigger": "Filtrar",
+      "apply": "Aplicar",
+      "reset": "Restablecer",
+      "clearAll": "Borrar todo",
+      "close": "Cerrar"
+    },
+    "copy": {
+      "trigger": "Copiar enlace",
+      "success": "¡URL copiada al portapapeles!",
+      "error": "Error al copiar la URL."
+    },
+    "social": {
+      "facebook": "Facebook",
+      "linkedin": "LinkedIn",
+      "twitter": "Twitter"
+    }
+  },
+  "errors": {
+    "generic": {
+      "heading": "¡Algo salió mal!",
+      "retry": "Reintentar"
+    },
+    "notFound": {
+      "heading": "Página no encontrada",
+      "home": "Volver al inicio"
+    }
+  },
+  "site": {
+    "name": "Idris",
+    "description": "Plataforma abierta para evaluar el riesgo de incendios forestales en Paraguay y apoyar a las autoridades de gestión de riesgos en la toma de decisiones basadas en datos.",
+    "creator": "Idris",
+    "creatorUrl": "",
+    "keywords": "Reducción del riesgo de desastres, Incendios forestales, Paraguay, Resiliencia climática",
+    "ogLocale": "es_PY"
+  },
+  "nav": {
+    "menu": "Menú",
+    "homeAlt": "Inicio de {name}",
+    "links": {
+      "home": "Inicio",
+      "analytics": "Analítica",
+      "datasets": "Conjuntos de datos",
+      "aboutUs": "Acerca de"
+    }
+  },
+  "factors": {
+    "riskScore": {
+      "name": "Puntuación de riesgo"
+    },
+    "hazard": {
+      "name": "Riesgo de incendio forestal",
+      "description": "Probabilidad de que se produzca un incendio forestal con potencial de causar pérdidas de vidas humanas o daños materiales."
+    },
+    "exposure": {
+      "name": "Exposición",
+      "description": "Personas, infraestructuras, viviendas, capacidades productivas y otros activos humanos tangibles ubicados en zonas propensas a incendios."
+    },
+    "vulnerability": {
+      "name": "Vulnerabilidad",
+      "description": "Vulnerabilidades físicas, sociales, económicas y ambientales que aumentan la susceptibilidad de un área o comunidad al impacto de los incendios."
+    },
+    "governmentResponse": {
+      "name": "Respuesta gubernamental",
+      "description": "Capacidades y recursos del Estado para reducir el nivel de riesgo o los efectos de los incendios."
+    }
+  },
+  "home": {
+    "hero": {
+      "tagline": "Descubra perspectivas, evalúe riesgos y construya resiliencia"
+    },
+    "analytics": {
+      "heading": "Tablero de analítica",
+      "description": "Explore los perfiles de riesgo de incendios forestales por departamento y distrito en Paraguay.",
+      "comingSoon": "Próximamente"
+    },
+    "datasets": {
+      "heading": "Catálogo de datos",
+      "description": "Explore y use conjuntos de datos de alto valor"
+    },
+    "resources": {
+      "heading": "Recursos",
+      "description": "Conjuntos de datos destacados"
+    }
+  },
+  "analytics": {
+    "sidebar": {
+      "heading": "TABLERO DE ANALÍTICA",
+      "indicators": "INDICADORES",
+      "actions": "ACCIONES"
+    },
+    "views": {
+      "map": "Mapa",
+      "chart": "Gráfico",
+      "table": "Tabla",
+      "more": "Más",
+      "long": {
+        "map": "Vista de mapa",
+        "chart": "Vista de gráfico",
+        "table": "Vista de tabla"
+      }
+    },
+    "filters": {
+      "division": {
+        "title": "Departamento",
+        "label": "Seleccionar departamento",
+        "placeholder": "Seleccione un departamento",
+        "disabledHint": "Seleccione un departamento para habilitar"
+      },
+      "subdivision": {
+        "title": "Distrito",
+        "label": "Seleccionar {type}",
+        "placeholder": "Seleccione un {type}",
+        "defaultType": "Distrito",
+        "emptyPrompt": "Por favor seleccione un departamento"
+      },
+      "month": {
+        "title": "Mes",
+        "label": "Seleccionar mes",
+        "labelMulti": "Seleccionar meses"
+      }
+    },
+    "loading": "Cargando datos...",
+    "map": {
+      "loading": "Cargando datos del mapa...",
+      "error": "Error al cargar los datos del mapa."
+    },
+    "chart": {
+      "axes": {
+        "timePeriod": "Período",
+        "score": "Puntuación",
+        "units": "Unidades"
+      },
+      "emptyPrompt": {
+        "timePeriod": "Por favor seleccione un período",
+        "region": "Por favor seleccione una región"
+      },
+      "error": "Error: {message}",
+      "fetchError": "No se pudieron obtener los datos"
+    },
+    "table": {
+      "regionName": "Nombre de la región",
+      "regionBoundary": "Tipo de región",
+      "empty": "No hay datos disponibles.",
+      "labels": {
+        "rows": "Filas: ",
+        "pageIndex": "Página {current} de {total}",
+        "pageIndexMobile": "{current} / {total}",
+        "firstPage": "Primera página",
+        "previousPage": "Página anterior",
+        "nextPage": "Página siguiente",
+        "lastPage": "Última página"
+      }
+    },
+    "divisionHeading": "Departamento de {name}",
+    "subdivisionHeading": "{type} de {name}",
+    "risk": {
+      "1": "Riesgo muy bajo",
+      "2": "Riesgo bajo",
+      "3": "Riesgo medio",
+      "4": "Riesgo alto",
+      "5": "Riesgo muy alto"
+    },
+    "detail": {
+      "cumulativeFiscalYearUntil": "Acumulado del año fiscal hasta {date}",
+      "calculatedFor": "Calculado para {date}",
+      "cumulativeUntil": "Acumulado hasta {date}",
+      "contributingIndicators": "Algunos indicadores que contribuyen a {name} son",
+      "docsLink": "Leer la documentación",
+      "sourceLink": "Explorar datos de origen",
+      "close": "Cerrar detalles",
+      "open": "Abrir detalles"
+    },
+    "about": {
+      "heading": "Conozca sus indicadores de riesgo",
+      "overallRisk": "Riesgo de incendio forestal",
+      "description": "El riesgo de desastres es una función de — peligro, vulnerabilidad, exposición y capacidad de respuesta",
+      "calculation": "El riesgo total se calcula a partir de:",
+      "userGuideLink": "Leer la guía de usuario",
+      "docsLink": "Leer la documentación"
+    },
+    "actions": {
+      "share": {
+        "label": "Compartir"
+      },
+      "download": {
+        "label": "Descargar informe",
+        "confirm": "¿Desea descargar el informe de \"{name}\"?",
+        "error": "Error al descargar el informe: {error}"
+      }
+    }
+  },
+  "datasets": {
+    "search": {
+      "label": "Buscar",
+      "placeholder": "Buscar conjuntos de datos"
+    },
+    "sort": {
+      "label": "Ordenar por:",
+      "order": {
+        "recent": "Recientes",
+        "alphabetical": "Alfabético"
+      }
+    },
+    "count": "Mostrando {count} de {total} conjuntos",
+    "pagination": {
+      "rows": "Filas: ",
+      "page": "Página {current} de {total}",
+      "first": "Primera página",
+      "previous": "Página anterior",
+      "next": "Página siguiente",
+      "last": "Última página"
+    },
+    "labels": {
+      "source": "Fuente: ",
+      "lastUpdated": "Última actualización: ",
+      "updateFrequency": "Frecuencia de actualización: ",
+      "referencePeriod": "Período de referencia: ",
+      "updated": "Actualizado: ",
+      "category": "Categoría: ",
+      "formats": "Formatos: ",
+      "tags": "Etiquetas: "
+    },
+    "periodRange": "{from} a {to}",
+    "showLess": "Mostrar menos",
+    "showMore": "Mostrar más",
+    "detail": {
+      "about": {
+        "heading": "Acerca del conjunto de datos"
+      },
+      "metadata": {
+        "heading": "Metadatos",
+        "sourceLink": "Visitar sitio web de origen",
+        "githubLink": "Ir al repositorio de Github"
+      },
+      "resources": {
+        "heading": "Recursos descargables",
+        "download": "Descargar"
+      },
+      "visualizations": {
+        "heading": "Visualizaciones",
+        "mapError": "No se pudo cargar el mapa."
+      },
+      "share": "Compartir conjunto"
+    }
+  },
+  "footer": {
+    "credit": "Demostración de la plataforma IDS-DRR. Datos sintéticos."
+  },
+  "states": {
+    "paraguay": "Paraguay"
+  }
+}

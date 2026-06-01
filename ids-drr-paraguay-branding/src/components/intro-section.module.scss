@@ -1,0 +1,36 @@
+// Section dimensions and the contrast scrim live in a CSS module rather
+// than Tailwind utilities so they're guaranteed in the compiled CSS —
+// Tailwind's content scan sometimes misses arbitrary-value classes
+// (e.g. `h-[560px]`, `from-black/70`) sourced from a symlinked package
+// outside the project root.
+
+.heroSection {
+  background-color: #153226;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 320px;
+
+  @media (min-width: 1024px) {
+    height: 560px;
+  }
+}
+
+// Dark gradient over the bottom half so the tagline reads on any
+// region of the photo.
+.scrim {
+  position: absolute;
+  inset: 50% 0 0 0;
+  pointer-events: none;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent
+  );
+}
