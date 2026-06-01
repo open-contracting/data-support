@@ -7,3 +7,5 @@ jobs:
       contents: read
     with:
       lockfile_path: ids-drr-paraguay-branding/package-lock.json
+      # The ids-drr-branding-types peer is consumed via a `github:` URL.
+      lockfile_lint_args: --allowed-hosts npm github.com --allowed-schemes "https:" "git+https:" "git+ssh:"
