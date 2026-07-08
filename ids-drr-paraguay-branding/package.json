@@ -11,7 +11,7 @@
   ],
   "packageManager": "pnpm@11.9.0",
   "dependencies": {
-    "ids-drr-branding-types": "github:open-contracting/ids-drr-branding-types"
+    "ids-drr-branding-types": "git+https://github.com/open-contracting/ids-drr-branding-types.git"
   },
   "devDependencies": {
     "knip": "^6.23.0"
