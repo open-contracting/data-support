@@ -9,7 +9,7 @@ importers:
   .:
     dependencies:
       ids-drr-branding-types:
-        specifier: git+https://github.com/open-contracting/ids-drr-branding-types.git
+        specifier: github:open-contracting/ids-drr-branding-types
         version: git+ssh://git@github.com/open-contracting/ids-drr-branding-types.git#1da5b1b28a07b5b1e0d2f6b0b9212afe15df78bb
       next:
         specifier: ^15
