@@ -18,5 +18,8 @@
     "opub-ui": "^0.5",
     "react": "^19",
     "react-dom": "^19"
+  },
+  "devDependencies": {
+    "knip": "^6.24.0"
   }
 }
