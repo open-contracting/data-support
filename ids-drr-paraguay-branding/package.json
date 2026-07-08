@@ -20,6 +20,6 @@
     "react-dom": "^19"
   },
   "devDependencies": {
-    "knip": "^6.24.0"
+    "knip": "^6.23.0"
   }
 }
