@@ -16,23 +16,23 @@ export const Credits: Exports["Credits"] = undefined;
 export const PartnerLogos: Exports["PartnerLogos"] = undefined;
 
 export const config: Exports["config"] = {
-    logo,
-    heroBackground: heroBackground.src,
-    heroForeground,
-    states: [
-        {
-            name: "Paraguay",
-            slug: "paraguay",
-            icon: paraguayIcon,
-            status: "active",
-            zoom: 5.5,
-            minZoom: 5,
-        },
-    ],
-    locales: ["es", "gn"],
-    defaultLocale: "es",
-    messages: {
-        es: messagesEs,
-        gn: messagesGn,
+  logo,
+  heroBackground: heroBackground.src,
+  heroForeground,
+  states: [
+    {
+      name: "Paraguay",
+      slug: "paraguay",
+      icon: paraguayIcon,
+      status: "active",
+      zoom: 5.5,
+      minZoom: 5,
     },
+  ],
+  locales: ["es", "gn"],
+  defaultLocale: "es",
+  messages: {
+    es: messagesEs,
+    gn: messagesGn,
+  },
 };
