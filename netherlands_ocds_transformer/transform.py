@@ -1,8 +1,8 @@
 import argparse
 import datetime
 import json
-import os
 import shutil
+from pathlib import Path
 from urllib.request import urlopen
 
 import json_merge_patch
@@ -14,8 +14,8 @@ from ocdsextensionregistry import ProfileBuilder
 
 # Config and meta data settings
 OCID_PREFIX = "ocds-1l04xe-"
-CSV_OUTPUT_DIR = "data"
-JSON_OUTPUT_DIR = "ocds"
+CSV_OUTPUT_DIR = Path("data")
+JSON_OUTPUT_DIR = Path("ocds")
 FILE_NAME = "Dataset_TenderNed_2016_2022.xlsx"
 DATA_SHEET_NAME = "Dataset 2016-2022"
 OCDS_MAP_COLUMN = "OCDS path"
@@ -78,12 +78,12 @@ bids_details = {
 def get_schema():
     with urlopen("https://standard.open-contracting.org/schema/1__1__5/release-schema.json") as f:
         schema = json.load(f)
-    with open("local_extensions.json") as local_extension:
+    with Path("local_extensions.json").open() as local_extension:
         local = json.load(local_extension)
     builder = ProfileBuilder("1__1__5", EXTENSIONS)
     patched_schema = builder.patched_release_schema(schema=schema)
     patched_schema = json_merge_patch.merge(patched_schema, local)
-    with open("schema.json", "w") as f:
+    with Path("schema.json").open("w") as f:
         json.dump(patched_schema, f, ensure_ascii=False, indent=2)
         f.write("\n")
 
@@ -356,9 +356,9 @@ def transform_to_ocds(data):
 
 def convert_to_json(schema, year):
     """Convert a CSV file to OCDS JSON."""
-    json_dir = os.path.join(JSON_OUTPUT_DIR, f"{year}.json")
+    json_dir = JSON_OUTPUT_DIR / f"{year}.json"
     unflatten(
-        os.path.join(CSV_OUTPUT_DIR, year),
+        CSV_OUTPUT_DIR / year,
         root_list_path="releases",
         root_id="id",
         schema=schema,
@@ -378,7 +378,7 @@ def format_dates(data_frame):
 
 def package_releases(json_dir):
     """Package a list of releases into a release package."""
-    with open(json_dir) as f:
+    with json_dir.open() as f:
         data = json.load(f)
     packages = ocdskit.combine.package_releases(
         data["releases"],
@@ -387,7 +387,7 @@ def package_releases(json_dir):
         extensions=EXTENSIONS,
         published_date=datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT00:00:00Z"),
     )
-    with open(json_dir, "w") as outfile:
+    with json_dir.open("w") as outfile:
         outfile.write(json.dumps(packages))
 
 
@@ -396,15 +396,15 @@ def initial_setup(*, generate_schema=False):
     if generate_schema:
         get_schema()
     for path in [JSON_OUTPUT_DIR, CSV_OUTPUT_DIR]:
-        if not os.path.isdir(path):
-            os.makedirs(path)
+        if not path.is_dir():
+            path.mkdir(parents=True)
 
 
 def save_csv(data, year):
-    output = os.path.join(CSV_OUTPUT_DIR, year)
-    if not os.path.isdir(output):
-        os.makedirs(output)
-    data.to_csv(os.path.join(output, f"{year}.csv"), index=False)
+    output = CSV_OUTPUT_DIR / year
+    if not output.is_dir():
+        output.mkdir(parents=True)
+    data.to_csv(output / f"{year}.csv", index=False)
 
 
 def main():
