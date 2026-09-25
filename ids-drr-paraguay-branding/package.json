@@ -1,6 +1,5 @@
 {
   "name": "ids-drr-branding",
-  "version": "0.1.0",
   "private": true,
   "description": "Idris (Paraguay) branding package — ships as the same module name as the stub so the frontend can swap implementations without code changes.",
   "main": "src/index.ts",
