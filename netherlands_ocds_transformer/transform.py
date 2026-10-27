@@ -1,5 +1,5 @@
 import argparse
-import datetime
+import datetime as dt
 import json
 import shutil
 from pathlib import Path
@@ -385,7 +385,7 @@ def package_releases(json_dir):
         uri=OCDS_DATA_SET_URI,
         publisher={"name": PUBLISHER_NAME},
         extensions=EXTENSIONS,
-        published_date=datetime.datetime.now(datetime.UTC).strftime("%Y-%m-%dT00:00:00Z"),
+        published_date=dt.datetime.now(dt.UTC).strftime("%Y-%m-%dT00:00:00Z"),
     )
     with json_dir.open("w") as outfile:
         outfile.write(json.dumps(packages))
