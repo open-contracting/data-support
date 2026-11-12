@@ -5,7 +5,7 @@ attrs==23.1.0
     #   -r requirements.txt
     #   cattrs
     #   requests-cache
-backports-datetime-fromisoformat==2.0.0
+backports-datetime-fromisoformat==2.0.3
     # via
     #   -r requirements.txt
     #   flattentool
@@ -43,7 +43,7 @@ et-xmlfile==1.1.0
     # via
     #   -r requirements.txt
     #   openpyxl
-flattentool==0.24.0
+flattentool==0.28.0
     # via -r requirements.txt
 idna==3.15
     # via
@@ -69,7 +69,7 @@ lxml==6.1.0
     # via
     #   -r requirements.txt
     #   flattentool
-numpy==1.24.4
+numpy==2.4.6
     # via
     #   -r requirements.txt
     #   pandas
@@ -87,11 +87,11 @@ odfpy==1.4.1
     # via
     #   -r requirements.txt
     #   flattentool
-openpyxl==3.1.2
+openpyxl==3.1.5
     # via
     #   -r requirements.txt
     #   flattentool
-pandas==1.5.3
+pandas==3.1.1
     # via -r requirements.txt
 persistent==5.1
     # via
@@ -106,7 +106,7 @@ pycparser==2.21
     # via
     #   -r requirements.txt
     #   cffi
-python-dateutil==2.8.2
+python-dateutil==4.0.0
     # via
     #   -r requirements.txt
     #   pandas
@@ -114,7 +114,6 @@ pytz==2023.3.post1
     # via
     #   -r requirements.txt
     #   flattentool
-    #   pandas
 requests==2.33.0
     # via
     #   -r requirements.txt
@@ -129,16 +128,26 @@ schema==0.7.5
     # via
     #   -r requirements.txt
     #   flattentool
+setuptools==84.2.1
+    # via
+    #   -r requirements.txt
+    #   zc-lockfile
+    #   zc-zlibstorage
+    #   zodbpickle
+    #   zope-interface
 six==1.16.0
     # via
     #   -r requirements.txt
-    #   python-dateutil
     #   url-normalize
     #   zodb
 transaction==3.1.0
     # via
     #   -r requirements.txt
     #   zodb
+tzdata==2026.6
+    # via
+    #   -r requirements.txt
+    #   python-dateutil
 url-normalize==1.4.3
     # via
     #   -r requirements.txt
