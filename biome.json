@@ -7,7 +7,6 @@
   },
   "formatter": {
     "indentStyle": "space",
-    "lineWidth": 119,
-    "includes": ["**", "!netherlands_ocds_transformer/*.json"]
+    "lineWidth": 119
   }
 }

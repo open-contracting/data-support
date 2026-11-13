@@ -8,9 +8,3 @@ jobs:
     secrets:
       client-id: ${{ secrets.APP_CLIENT_ID }}
       private-key: ${{ secrets.APP_PRIVATE_KEY }}
-    with:
-      ocds-extension-paths: netherlands_ocds_transformer/local_extensions.json
-      # mapping_ocds.csv is a Google Sheets export.
-      ocds-no-csv: 'yes'
-      # Extends and stores the release schema to unflatten data.
-      ocds-schema-exceptions: schema.json
